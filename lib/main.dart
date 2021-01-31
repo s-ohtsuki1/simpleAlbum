@@ -2,6 +2,8 @@ import 'package:favorite/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'book_list_page.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -44,7 +46,10 @@ class _MyHomePage extends StatelessWidget {
                 RaisedButton(
                   child: Text('Button'),
                   onPressed: () {
-                    model.changeFrontText();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BookListPage()),
+                    );
                   },
                 ),
               ],
