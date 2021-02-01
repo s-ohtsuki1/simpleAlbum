@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "773036412153",
+    "project_id": "favoritebookapp",
+    "storage_bucket": "favoritebookapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773036412153:android:2144be25712d0c5fb9a628",
+        "android_client_info": {
+          "package_name": "net.sachi.favorite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773036412153-r20kq53batjiuv2oci1n30kua7iebihk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdhZUQlAjhgzuEdebYoYQD7Wr5EpLTuOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773036412153-r20kq53batjiuv2oci1n30kua7iebihk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "773036412153-o3le4sab52ki249atlucu2k657s7e3sd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.sachi.favorite"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
