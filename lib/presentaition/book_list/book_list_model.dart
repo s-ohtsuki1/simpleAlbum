@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class BookListModel extends ChangeNotifier {
   List<Book> books = [];
 
+  // 本一覧取得
   Future fetchBooks() async {
     final docs = await Firestore.instance.collection('books').getDocuments();
     final books = docs.documents.map((doc) => Book(doc)).toList();
