@@ -21,6 +21,19 @@ class BookListPage extends StatelessWidget {
             final listTiles = books
                 .map((book) => ListTile(
                       title: Text(book.title),
+                      trailing: IconButton(
+                        icon: Icon(Icons.edit),
+                        // 編集画面へ
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddBookPage(book: book),
+                            ),
+                          );
+                          model.fetchBooks();
+                        },
+                      ),
                     ))
                 .toList();
             return ListView(
@@ -32,6 +45,7 @@ class BookListPage extends StatelessWidget {
             Consumer<BookListModel>(builder: (context, model, child) {
           return FloatingActionButton(
             child: Icon(Icons.add),
+            // 新規追加画面へ
             onPressed: () async {
               await Navigator.push(
                 context,
