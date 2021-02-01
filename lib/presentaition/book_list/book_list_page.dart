@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../domain/book.dart';
 import 'package:favorite/presentaition/add_book/add_book_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +34,26 @@ class BookListPage extends StatelessWidget {
                           model.fetchBooks();
                         },
                       ),
+                      // 長押しで本を削除
+                      onLongPress: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('${book.title}を削除しますか？'),
+                              actions: [
+                                FlatButton(
+                                  child: Text('OK'),
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+                                    await deleteBook(context, model, book);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ))
                 .toList();
             return ListView(
@@ -59,6 +79,39 @@ class BookListPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  Future deleteBook(
+    BuildContext context,
+    BookListModel model,
+    Book book,
+  ) async {
+    try {
+      await model.deleteBook(book);
+      await _showDialog(context, '削除しました');
+      await model.fetchBooks();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future _showDialog(BuildContext context, String title) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          actions: [
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
