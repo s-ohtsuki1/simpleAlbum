@@ -1,4 +1,6 @@
 import 'package:favorite/presentaition/book_list/book_list_page.dart';
+import 'package:favorite/presentaition/login/login_page.dart';
+import 'package:favorite/presentaition/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,11 +46,20 @@ class _MyHomePage extends StatelessWidget {
                   ),
                 ),
                 RaisedButton(
-                  child: Text('Button'),
+                  child: Text('Sign Up'),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BookListPage()),
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Login'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
                 ),
