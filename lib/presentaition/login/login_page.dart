@@ -1,3 +1,4 @@
+import 'package:favorite/presentaition/book_list/book_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,8 +45,12 @@ class LoginPage extends StatelessWidget {
                     child: Text('ログインする'),
                     onPressed: () async {
                       try {
-                        model.login();
-                        _showDialog(context, 'ログインが完了しました。');
+                        await model.login();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BookListPage()),
+                        );
                       } catch (e) {
                         _showDialog(context, e.toString());
                       }
