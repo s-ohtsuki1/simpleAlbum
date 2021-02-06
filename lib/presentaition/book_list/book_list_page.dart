@@ -20,6 +20,7 @@ class BookListPage extends StatelessWidget {
             final books = model.books;
             final listTiles = books
                 .map((book) => ListTile(
+                      leading: Image.network(book.imageURL),
                       title: Text(book.title),
                       trailing: IconButton(
                         icon: Icon(Icons.edit),
@@ -42,6 +43,7 @@ class BookListPage extends StatelessWidget {
                             return AlertDialog(
                               title: Text('${book.title}を削除しますか？'),
                               actions: [
+                                // ignore: deprecated_member_use
                                 FlatButton(
                                   child: Text('OK'),
                                   onPressed: () async {
@@ -103,6 +105,7 @@ class BookListPage extends StatelessWidget {
         return AlertDialog(
           title: Text(title),
           actions: [
+            // ignore: deprecated_member_use
             FlatButton(
               child: Text('OK'),
               onPressed: () {
