@@ -53,9 +53,11 @@ class AddBookPageState extends State<AddBookPage> {
                           },
                           child: model.imageFile != null
                               ? Image.file(model.imageFile)
-                              : Container(
-                                  color: Colors.grey,
-                                ),
+                              : isUpdate
+                                  ? Image.network(book.imageUrl)
+                                  : Container(
+                                      color: Colors.grey,
+                                    ),
                         ),
                       ),
                     ),

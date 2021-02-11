@@ -8,15 +8,18 @@ import 'package:image_picker/image_picker.dart';
 
 class AddBookModel extends ChangeNotifier {
   String bookTitle = '';
+  String imageUrl = '';
   File imageFile;
   bool isUploading = false;
 
   startLoading() {
     isUploading = true;
+    notifyListeners();
   }
 
   endLoading() {
     isUploading = false;
+    notifyListeners();
   }
 
   // カメラロールを開く
@@ -24,13 +27,15 @@ class AddBookModel extends ChangeNotifier {
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    imageFile = File(pickedFile.path);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
     notifyListeners();
   }
 
   // 本を追加
   Future addBook() async {
-    final imageUrl = await _uploadBookImage();
+    imageUrl = await _uploadBookImage();
 
     await Firestore.instance.collection('books').add(
       {
@@ -46,7 +51,7 @@ class AddBookModel extends ChangeNotifier {
     final document =
         Firestore.instance.collection('books').document(book.documentId);
 
-    final imageUrl = await _uploadBookImage();
+    imageUrl = await _uploadBookImage();
 
     await document.updateData(
       {
@@ -67,8 +72,8 @@ class AddBookModel extends ChangeNotifier {
         .putFile(imageFile)
         .onComplete;
 
-    final String downloadUrl = await snapshot.ref.getDownloadURL();
+    imageUrl = await snapshot.ref.getDownloadURL();
 
-    return downloadUrl;
+    return imageUrl;
   }
 }
