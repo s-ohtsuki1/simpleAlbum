@@ -5,9 +5,10 @@ import 'package:provider/provider.dart';
 
 import 'book_list_model.dart';
 
+// ignore: must_be_immutable
 class BookListPage extends StatelessWidget {
-  final _key = GlobalKey<ScaffoldState>();
   var doneMessage = '';
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookListModel>(
@@ -34,36 +35,28 @@ class BookListPage extends StatelessWidget {
                             ),
                           );
                           if (doneMessage != '' && doneMessage != null) {
-                            Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(doneMessage),
-                                action: SnackBarAction(
-                                  label: 'OK',
-                                  onPressed: () {
-                                    // Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            );
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(doneMessage),
+                              backgroundColor: Colors.lightGreen,
+                            ));
                           }
                           await model.fetchBooks();
                         },
                       ),
                       // 長押しで本を削除
                       onLongPress: () async {
-                        bool result = false;
-                        result = await showDialog<bool>(
+                        doneMessage = await showDialog<String>(
                           context: context,
                           builder: (BuildContext context) {
                             return BookDeleteDialog(book.title);
                           },
                         );
-                        if (result != null && result) {
+                        if (doneMessage != '' && doneMessage != null) {
                           await model.deleteBook(book);
-                          final snackBar = SnackBar(
-                            content: Text('${book.title}を削除しました'),
-                          );
-                          Scaffold.of(context).showSnackBar(snackBar);
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(doneMessage),
+                            backgroundColor: Colors.deepOrangeAccent,
+                          ));
                           await model.fetchBooks();
                         }
                       },
@@ -88,17 +81,10 @@ class BookListPage extends StatelessWidget {
                 ),
               );
               if (doneMessage != '' && doneMessage != null) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(doneMessage),
-                    action: SnackBarAction(
-                      label: 'OK',
-                      onPressed: () {
-                        // Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                );
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(doneMessage),
+                  backgroundColor: Colors.lightBlueAccent,
+                ));
               }
               await model.fetchBooks();
             },
@@ -109,6 +95,7 @@ class BookListPage extends StatelessWidget {
   }
 }
 
+// test@email.com
 class BookDeleteDialog extends StatelessWidget {
   BookDeleteDialog(this.deleteTitle);
   final deleteTitle;
@@ -119,18 +106,23 @@ class BookDeleteDialog extends StatelessWidget {
       title: Text('${this.deleteTitle}を削除しますか？'),
       children: <Widget>[
         SimpleDialogOption(
-          child: RaisedButton(
+          child: FloatingActionButton(
             child: Text('削除する'),
-            color: Colors.red,
+            backgroundColor: Colors.pinkAccent,
+            // color: Colors.red,
             shape: StadiumBorder(),
             onPressed: () {
-              Navigator.of(context).pop(true);
+              Navigator.pop(context, '${this.deleteTitle}を削除しました');
             },
           ),
         ),
         SimpleDialogOption(
-          child: RaisedButton(
-            child: Text('キャンセル'),
+          child: FloatingActionButton(
+            child: Text(
+              'キャンセル',
+              style: TextStyle(color: Colors.black87),
+            ),
+            backgroundColor: Colors.white38,
             shape: StadiumBorder(),
             onPressed: () {
               Navigator.pop(context);
