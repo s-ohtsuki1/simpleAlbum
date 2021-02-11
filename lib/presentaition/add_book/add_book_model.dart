@@ -4,34 +4,27 @@ import 'package:flutter/material.dart';
 
 class AddBookModel extends ChangeNotifier {
   String bookTitle = '';
-
-  // バリデーション
-  void isRequired() {
-    if (bookTitle.isEmpty) {
-      throw ('タイトルを入力してください。');
-    }
-  }
+  String imageUrl = '';
 
   // 本を追加
   Future addBook() async {
-    isRequired();
     await Firestore.instance.collection('books').add(
       {
         'title': bookTitle,
-        'created_at': Timestamp.now(),
+        'imageUrl': 'https://m.media-amazon.com/images/I/61SX2klNzXL.jpg',
+        'createdAt': Timestamp.now(),
       },
     );
   }
 
   // 本を編集
   Future updateBook(Book book) async {
-    isRequired();
     final document =
         Firestore.instance.collection('books').document(book.documentId);
     await document.updateData(
       {
         'title': bookTitle,
-        'updated_at': Timestamp.now(),
+        'updatedAt': Timestamp.now(),
       },
     );
   }

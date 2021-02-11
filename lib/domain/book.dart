@@ -4,10 +4,10 @@ class Book {
   Book(DocumentSnapshot doc) {
     documentId = doc.documentID;
     title = doc['title'];
-    imageURL = doc['imageURL'];
+    imageUrl = doc['imageUrl'];
   }
 
   String documentId;
   String title;
-  String imageURL;
+  String imageUrl;
 }
