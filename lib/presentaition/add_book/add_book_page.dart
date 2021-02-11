@@ -38,6 +38,9 @@ class AddBookPageState extends State<AddBookPage> {
               title: Text(isUpdate ? '本を編集' : '本を追加'),
             ),
             body: Consumer<AddBookModel>(builder: (context, model, child) {
+              if (isUpdate) {
+                model.imageUrl = book.imageUrl;
+              }
               return Form(
                 key: _formKey,
                 child: Column(

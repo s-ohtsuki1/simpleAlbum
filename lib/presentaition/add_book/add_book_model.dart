@@ -64,15 +64,18 @@ class AddBookModel extends ChangeNotifier {
 
   // 本の画像をアップロード
   Future<String> _uploadBookImage() async {
-    final storage = FirebaseStorage.instance;
+    // 画像の変更があった場合
+    if (imageFile != null) {
+      final storage = FirebaseStorage.instance;
 
-    StorageTaskSnapshot snapshot = await storage
-        .ref()
-        .child('books/' + bookTitle)
-        .putFile(imageFile)
-        .onComplete;
+      StorageTaskSnapshot snapshot = await storage
+          .ref()
+          .child('books/' + bookTitle)
+          .putFile(imageFile)
+          .onComplete;
 
-    imageUrl = await snapshot.ref.getDownloadURL();
+      imageUrl = await snapshot.ref.getDownloadURL();
+    }
 
     return imageUrl;
   }
