@@ -1,71 +1,80 @@
+import 'package:favorite/presentaition/book_list/book_list_page.dart';
 import 'package:favorite/presentaition/login/login_page.dart';
-import 'package:favorite/presentaition/signup/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-
-import 'main_model.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Favorite Book',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: _MyHomePage(),
-    );
+class UserState extends ChangeNotifier {
+  FirebaseUser user;
+  void setUser(FirebaseUser currentUser) {
+    user = currentUser;
+    notifyListeners();
   }
 }
 
-class _MyHomePage extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  final UserState user = UserState();
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MainModel>(
-      create: (_) => MainModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Book'),
+    return ChangeNotifierProvider<UserState>.value(
+        value: user,
+        child: MaterialApp(
+          //デバックラベル非表示
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: LoginCheck(),
+        ));
+  }
+}
+
+class LoginCheck extends StatefulWidget {
+  LoginCheck({Key key}) : super(key: key);
+
+  @override
+  _LoginCheckState createState() => _LoginCheckState();
+}
+
+class _LoginCheckState extends State<LoginCheck> {
+  //ログイン状態のチェック(非同期で行う)
+  void checkUser() async {
+    final currentUser = await FirebaseAuth.instance.currentUser();
+    final userState = Provider.of<UserState>(context, listen: false);
+    if (currentUser == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } else {
+      userState.setUser(currentUser);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BookListPage()),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkUser();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Text("Loading..."),
         ),
-        body: Consumer<MainModel>(builder: (context, model, child) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  model.frontText,
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-                RaisedButton(
-                  child: Text('Sign Up'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                    );
-                  },
-                ),
-                RaisedButton(
-                  child: Text('Login'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        }),
       ),
     );
   }
