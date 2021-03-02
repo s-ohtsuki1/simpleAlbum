@@ -1,8 +1,12 @@
 import 'package:favorite/presentaition/book_list/book_list_page.dart';
 import 'package:favorite/presentaition/login/login_page.dart';
+import 'package:favorite/screen/sign_in/sign_in_screen.dart';
+import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+
+import '../../theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,11 +31,8 @@ class MyApp extends StatelessWidget {
           //デバックラベル非表示
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: LoginCheck(),
+          theme: theme(),
+          home: SignInScreen(),
         ));
   }
 }
