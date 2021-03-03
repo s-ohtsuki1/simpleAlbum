@@ -15,11 +15,27 @@ ThemeData theme() {
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(
-    color: Colors.yellow[100],
+    color: Colors.brown[400],
     elevation: 0,
     brightness: Brightness.light,
     textTheme: TextTheme(
-      headline6: TextStyle(color: Colors.brown[700], fontSize: 18),
+      headline6: TextStyle(color: Colors.white70, fontSize: 18),
+    ),
+  );
+}
+
+Text appBarTextStyle(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+        fontSize: 18, color: Colors.white70, fontWeight: FontWeight.bold),
+  );
+}
+
+RoundedRectangleBorder appBarShape() {
+  return RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(
+      bottom: Radius.circular(10),
     ),
   );
 }
