@@ -1,8 +1,11 @@
 import 'package:favorite/components/default_button.dart';
 import 'package:favorite/components/form_error.dart';
 import 'package:favorite/constants.dart';
+import 'package:favorite/model/sign_up/sign_up_model.dart';
+import 'package:favorite/presentaition/book_list/book_list_page.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -57,6 +60,8 @@ class _SignFormState extends State<SignForm> {
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<SignUpModel>(context, listen: false);
+
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -69,9 +74,21 @@ class _SignFormState extends State<SignForm> {
             FormError(errors: errors),
             DefaultButton(
               text: "登録",
-              press: () {
+              press: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
+                  if (errors.isEmpty) {
+                    try {
+                      await model.signUp();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookListPage()),
+                      );
+                    } catch (e) {
+                      // TODO err
+                      // _showDialog(context, e.toString());
+                    }
+                  }
                 }
               },
             ),
@@ -82,8 +99,12 @@ class _SignFormState extends State<SignForm> {
   }
 
   TextFormField buildEmailFormField() {
+    final mailContlloer =
+        Provider.of<SignUpModel>(context, listen: false).mailEditController;
+
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      controller: mailContlloer,
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kEmailNullError)) {
           setState(() {
@@ -95,6 +116,7 @@ class _SignFormState extends State<SignForm> {
             errors.remove(kInvalidEmailError);
           });
         }
+        Provider.of<SignUpModel>(context, listen: false).mail = value;
         return null;
       },
       validator: (value) {
@@ -131,8 +153,15 @@ class _SignFormState extends State<SignForm> {
   }
 
   TextFormField buildPasswordFormField() {
+    final passwordContlloer =
+        Provider.of<SignUpModel>(context, listen: false).passwordEditController;
+
     return TextFormField(
       obscureText: true,
+      controller: passwordContlloer,
+      onChanged: (password) {
+        Provider.of<SignUpModel>(context, listen: false).password = password;
+      },
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
