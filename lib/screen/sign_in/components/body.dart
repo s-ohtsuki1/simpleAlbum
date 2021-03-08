@@ -1,8 +1,9 @@
-import 'package:favorite/components/default_button.dart';
-import 'package:favorite/components/form_error.dart';
+import 'package:favorite/components/socal_card.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
+
+import 'sign_form.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -21,116 +22,57 @@ class Body extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Center(
-                    // ここを追加
-                    child: Image.asset(
-                      'assets/images/hiyoko_login.png',
-                      height: getProportionateScreenHeight(120),
-                      width: getProportionateScreenWidth(120),
+                  SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  Text(
+                    "Welcome Back",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(20),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   Text(
                     "メールアドレスとパスワードを入力してください。",
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   SignForm(),
+                  SizedBox(height: getProportionateScreenHeight(10)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SocalCard(
+                        icon: 'assets/icons/google-icon.svg',
+                        press: () {},
+                      ),
+                      SocalCard(
+                        icon: "assets/icons/facebook-2.svg",
+                        press: () {},
+                      ),
+                      SocalCard(
+                        icon: 'assets/icons/twitter.svg',
+                        press: () {},
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(10)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("アカウントをお持ちではないですか？",
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(16))),
+                      Text("会員登録",
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(16),
+                              color: kPrimaryColor)),
+                    ],
+                  ),
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SignForm extends StatefulWidget {
-  @override
-  _SignFormState createState() => _SignFormState();
-}
-
-class _SignFormState extends State<SignForm> {
-  final _formKey = GlobalKey<FormState>();
-  final List<String> errors = [];
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildEmailFormField(),
-            SizedBox(height: getProportionateScreenHeight(20)),
-            buildPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(20)),
-            FormError(errors: errors),
-            DefaultButton(
-              text: "ログイン",
-              press: () {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  TextFormField buildEmailFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value.isEmpty) {
-          setState(() {
-            if (errors.isNotEmpty) {
-              errors.removeLast();
-            }
-            errors.add("メールアドレスを入力してください。");
-          });
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        labelText: "email",
-        labelStyle: TextStyle(color: kSecondaryColor),
-        hintText: "メールアドレス",
-        hintStyle: TextStyle(color: kSecondaryColor),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 30, 20),
-          child: Icon(
-            Icons.mail_outline,
-            color: Colors.brown[800],
-            size: 32,
-          ),
-        ),
-      ),
-    );
-  }
-
-  TextFormField buildPasswordFormField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        labelText: "password",
-        labelStyle: TextStyle(color: kSecondaryColor),
-        hintText: "パスワード",
-        hintStyle: TextStyle(color: kSecondaryColor),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 30, 20),
-          child: Icon(
-            Icons.lock_open_outlined,
-            color: Colors.brown[800],
-            size: 32,
           ),
         ),
       ),

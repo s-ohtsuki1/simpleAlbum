@@ -28,8 +28,8 @@ final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "メールアドレスを入力してください。";
 const String kInvalidEmailError = "メールアドレスの形式が不正です。";
-const String kPassNullError = "Please Enter your password";
-const String kShortPassError = "Password is too short";
+const String kPassNullError = "パスワードを入力してください。";
+const String kShortPassError = "パスワードは8文字以上で入力してください。";
 const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
