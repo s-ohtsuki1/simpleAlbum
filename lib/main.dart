@@ -1,7 +1,6 @@
 import 'package:favorite/presentaition/book_list/book_list_page.dart';
+import 'package:favorite/routs.dart';
 import 'package:favorite/screen/sign_in/sign_in_screen.dart';
-import 'package:favorite/screen/sign_up/sign_up_screen.dart';
-import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +31,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: theme(),
-          home: SignInScreen(),
+          initialRoute: SignInScreen.routeName,
+          routes: routes,
         ));
   }
 }
