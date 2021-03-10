@@ -18,21 +18,17 @@ class Body extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
             children: [
-              SizedBox(height: SizeConfig.screenHeight * 0.04),
-              Text(
-                "パスワード再設定",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(28),
-                  color: Colors.brown,
-                  fontWeight: FontWeight.bold,
-                ),
+              Image.asset(
+                "assets/images/forgot_pass_mail.png",
+                height: SizeConfig.screenHeight * 0.3,
+                width: SizeConfig.screenWidth * 0.4,
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.04),
+              // SizedBox(height: SizeConfig.screenHeight * 0.001),
               Text(
-                "登録したメールアドレス当てに、\nパスワード再設定メールを送信します。",
+                "登録したメールアドレス宛に、\nパスワード再設定メールを送信します。",
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.02),
+              SizedBox(height: SizeConfig.screenHeight * 0.01),
               ForgotPassForm(),
             ],
           ),
@@ -113,7 +109,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             height: getProportionateScreenHeight(30),
           ),
           FormError(errors: errors),
-          SizedBox(height: SizeConfig.screenHeight * 0.1),
+          SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "送信",
             press: () {
@@ -121,6 +117,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 _formKey.currentState.save();
                 if (errors.isEmpty) {
                   try {
+                    // TODO パスワード再設定メール送信
                     // await model.login();
                     // Navigator.push(
                     //   context,
