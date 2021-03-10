@@ -1,5 +1,5 @@
+import 'package:favorite/components/no_account_text.dart';
 import 'package:favorite/components/socal_card.dart';
-import 'package:favorite/constants.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +22,7 @@ class Body extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: SizeConfig.screenHeight * 0.02),
-                  Text(
-                    "Welcome Back",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: getProportionateScreenWidth(20),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.screenHeight * 0.08),
                   Text(
                     "メールアドレスとパスワードを入力してください。",
                     textAlign: TextAlign.center,
@@ -58,18 +49,7 @@ class Body extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: getProportionateScreenHeight(10)),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("アカウントをお持ちではないですか？",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(16))),
-                      Text("会員登録",
-                          style: TextStyle(
-                              fontSize: getProportionateScreenWidth(16),
-                              color: kPrimaryColor)),
-                    ],
-                  ),
+                  NoAccountText(),
                 ],
               ),
             ),

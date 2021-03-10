@@ -1,7 +1,5 @@
-import 'package:favorite/constants.dart';
 import 'package:favorite/model/sign_in/sign_in_model.dart';
 import 'package:favorite/screen/sign_in/components/body.dart';
-import 'package:favorite/size_config.dart';
 import 'package:favorite/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +8,6 @@ class SignInScreen extends StatelessWidget {
   static String routeName = '/sign_in';
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return ChangeNotifierProvider<SignInModel>(
       create: (_) => SignInModel(),
       child: GestureDetector(
@@ -22,7 +19,7 @@ class SignInScreen extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Icon(Icons.sensor_door_outlined, size: 36),
+            title: appBarTextStyle("ログイン"),
             shape: appBarShape(),
           ),
           resizeToAvoidBottomInset: false,
