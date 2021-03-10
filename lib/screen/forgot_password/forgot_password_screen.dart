@@ -1,5 +1,6 @@
 import 'package:favorite/model/forgot_password/forgot_password_model.dart';
 import 'package:favorite/screen/forgot_password/components/body.dart';
+import 'package:favorite/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,8 @@ class ForgotPasswordScreen extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text("パスワードを設定"),
+            title: Text("パスワードを再設定"),
+            shape: appBarShape(),
           ),
           body: Consumer<ForgotPasswordModel>(builder: (context, model, child) {
             return Body();
