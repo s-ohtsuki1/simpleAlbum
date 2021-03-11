@@ -22,13 +22,13 @@ class Body extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: SizeConfig.screenHeight * 0.08),
+                  SizedBox(height: SizeConfig.screenHeight * 0.04),
                   Text(
                     "メールアドレスとパスワードを入力してください。",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.screenHeight * 0.06),
                   SignForm(),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   Row(
@@ -48,7 +48,7 @@ class Body extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: getProportionateScreenHeight(30)),
                   NoAccountText(),
                 ],
               ),

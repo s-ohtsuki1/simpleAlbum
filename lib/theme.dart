@@ -15,20 +15,21 @@ ThemeData theme() {
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(
-    color: Colors.brown[400],
+    color: Colors.yellow[100],
     elevation: 0,
     brightness: Brightness.light,
     textTheme: TextTheme(
-      headline6: TextStyle(color: Colors.white70, fontSize: 18),
+      headline6: TextStyle(color: kTextColor, fontSize: 18),
     ),
+    iconTheme: IconThemeData(color: kTextColor),
   );
 }
 
 Text appBarTextStyle(String title) {
   return Text(
     title,
-    style: TextStyle(
-        fontSize: 18, color: Colors.white70, fontWeight: FontWeight.bold),
+    style:
+        TextStyle(fontSize: 18, color: kTextColor, fontWeight: FontWeight.bold),
   );
 }
 
