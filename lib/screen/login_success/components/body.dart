@@ -8,14 +8,14 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: SizeConfig.screenHeight * 0.04),
+        SizedBox(height: SizeConfig.screenHeight * 0.2),
         Center(
-          child: Image.asset("assets/images/animal_login_success.png",
-              height: SizeConfig.screenHeight * 0.4),
+          child: Image.asset("assets/images/login_success_key.png",
+              height: SizeConfig.screenHeight * 0.3),
         ), // 40%
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
-          "おかえりなさい！",
+          "ログインしました！",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(20),
             fontWeight: FontWeight.bold,
