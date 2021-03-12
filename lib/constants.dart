@@ -14,6 +14,8 @@ const kTextColor = Color(0xFF6D4C41);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
+const kDefaultPadding = 20.0;
+
 final headingStyle = TextStyle(
   fontSize: getProportionateScreenWidth(28),
   fontWeight: FontWeight.bold,
@@ -22,6 +24,13 @@ final headingStyle = TextStyle(
 );
 
 const defaultDuration = Duration(milliseconds: 250);
+
+// our default Shadow
+const kDefaultShadow = BoxShadow(
+  offset: Offset(0, 15),
+  blurRadius: 27,
+  color: Colors.black26, // Black color with 12% opacity
+);
 
 // Form Error
 final RegExp emailValidatorRegExp =
