@@ -1,7 +1,8 @@
 import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/model/product.dart';
+import 'package:favorite/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
@@ -10,11 +11,11 @@ class AlbumCard extends StatelessWidget {
   const AlbumCard({
     Key key,
     this.itemIndex,
-    this.product,
+    this.album,
   }) : super(key: key);
 
   final int itemIndex;
-  final Product product;
+  final Book album;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +56,23 @@ class AlbumCard extends StatelessWidget {
               width: 190,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  product.image,
+                child: Image.network(
+                  album.imageUrl,
                   fit: BoxFit.cover,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -87,7 +102,9 @@ class AlbumCard extends StatelessWidget {
                               width: 18,
                             ),
                             Text(
-                              product.day,
+                              DateFormat('yyyy/MM/dd')
+                                  .format(album.createdAt.toDate())
+                                  .toString(),
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
@@ -102,7 +119,7 @@ class AlbumCard extends StatelessWidget {
                               width: 18,
                             ),
                             Text(
-                              product.title,
+                              album.title,
                               style: TextStyle(fontSize: 18),
                             ),
                           ],
@@ -118,14 +135,16 @@ class AlbumCard extends StatelessWidget {
                       vertical: kDefaultPadding / 4,
                     ),
                     decoration: BoxDecoration(
-                      color: model.setCategoryColor(product.categoryId),
+                      color: model.setCategoryColor(0),
+                      // color: model.setCategoryColor(product.categoryId),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(22),
                         bottomRight: Radius.circular(22),
                       ),
                     ),
                     child: Text(
-                      product.categoryId.toString(),
+                      "新着",
+                      // product.categoryId.toString(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

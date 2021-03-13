@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryList extends StatelessWidget {
-  int selectedIndex = 4;
-  List categories = ['最新10件', 'カテゴリ1', 'カテゴリ2', 'カテゴリ3', 'カテゴリ4'];
+  final int selectedIndex = 5;
+  final List categories = ['最新10件', 'カテゴリ1', 'カテゴリ2', 'カテゴリ3', 'カテゴリ4'];
   @override
   Widget build(BuildContext context) {
     AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);

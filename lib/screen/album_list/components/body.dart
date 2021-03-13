@@ -1,6 +1,7 @@
 import 'package:favorite/constants.dart';
-import 'package:favorite/model/product.dart';
+import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'album_card.dart';
 import 'category_list.dart';
@@ -9,6 +10,7 @@ import 'search_box.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);
     return Column(
       children: [
         SearchBox(),
@@ -30,10 +32,10 @@ class Body extends StatelessWidget {
                 ),
               ),
               ListView.builder(
-                itemCount: products.length,
+                itemCount: model.books.length,
                 itemBuilder: (context, index) => AlbumCard(
                   itemIndex: index,
-                  product: products[index],
+                  album: model.books[index],
                 ),
               ),
             ],
