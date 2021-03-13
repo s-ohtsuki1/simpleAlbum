@@ -1,5 +1,5 @@
 import 'package:favorite/components/default_button.dart';
-import 'package:favorite/presentaition/book_list/book_list_page.dart';
+import 'package:favorite/screen/album_list/album_list_screen.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -27,10 +27,10 @@ class Body extends StatelessWidget {
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
             text: "HOME",
-            press: () {
+            press: () async {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BookListPage()),
+                MaterialPageRoute(builder: (context) => AlbumListScreen()),
               );
             },
           ),
