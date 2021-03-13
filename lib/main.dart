@@ -1,5 +1,4 @@
 import 'package:favorite/presentaition/book_list/book_list_page.dart';
-import 'package:favorite/routs.dart';
 import 'package:favorite/screen/sign_in/sign_in_screen.dart';
 import 'package:favorite/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +25,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserState>.value(
-        value: user,
-        child: MaterialApp(
-          //デバックラベル非表示
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: theme(),
-          home: SplashScreen(),
-        ));
+      value: user,
+      child: MaterialApp(
+        //デバックラベル非表示
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: theme(),
+        home: SplashScreen(),
+      ),
+    );
   }
 }
 

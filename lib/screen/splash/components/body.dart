@@ -1,7 +1,7 @@
 import 'package:favorite/components/default_button.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/screen/sign_in/sign_in_screen.dart';
-import 'package:favorite/screen/splash/components/splash_contsnt.dart';
+import 'package:favorite/screen/splash/components/splash_content.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +22,8 @@ class _BodyState extends State<Body> {
       "text": "あなたの思い出に一言コメントを付けて \nアルバムにできます。",
     },
     {
-      "image": "assets/images/splash_printer.png",
-      "text": "お気に入りのフォトをプリントできます。",
+      "image": "assets/images/splash_share.png",
+      "text": "アルバムを家族や友達とシェアできます。",
     },
   ];
   @override
