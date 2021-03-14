@@ -1,5 +1,6 @@
 import 'package:favorite/constants.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
+import 'package:favorite/screen/album_detail/album_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class Body extends StatelessWidget {
     AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);
     return Column(
       children: [
-        SearchBox(),
+        SearchBox(onChanged: (value) {}),
         CategoryList(),
         SizedBox(
           height: kDefaultPadding / 2,
@@ -36,6 +37,14 @@ class Body extends StatelessWidget {
                 itemBuilder: (context, index) => AlbumCard(
                   itemIndex: index,
                   album: model.books[index],
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AlbumDetailScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

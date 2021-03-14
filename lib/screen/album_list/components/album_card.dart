@@ -12,10 +12,12 @@ class AlbumCard extends StatelessWidget {
     Key key,
     this.itemIndex,
     this.album,
+    this.press,
   }) : super(key: key);
 
   final int itemIndex;
   final Book album;
+  final Function press;
 
   @override
   Widget build(BuildContext context) {
@@ -27,132 +29,137 @@ class AlbumCard extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       height: 160,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          // カード背景
-          Container(
-            height: 136,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(22),
-              color: Colors.orangeAccent[200],
-              boxShadow: [kDefaultShadow],
-            ),
-            child: Container(
-              margin: EdgeInsets.only(right: 10),
+      child: InkWell(
+        onTap: press,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            // カード背景
+            Container(
+              height: 136,
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(22),
+                color: itemIndex.isEven
+                    ? Colors.orangeAccent[200]
+                    : kSecondaryColor,
+                boxShadow: [kDefaultShadow],
               ),
-            ),
-          ),
-          // 写真
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              height: 160,
-              width: 190,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  album.imageUrl,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(kPrimaryColor),
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
-                            : null,
-                      ),
-                    );
-                  },
+              child: Container(
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(22),
                 ),
               ),
             ),
-          ),
-          // 写真コメント
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: SizedBox(
-              height: 136,
-              width: size.width - 190,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Spacer(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 40,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/calendar.svg",
-                              height: 18,
-                              width: 18,
-                            ),
-                            Text(
-                              DateFormat('yyyy/MM/dd')
-                                  .format(album.createdAt.toDate())
-                                  .toString(),
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+            // 写真
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                height: 160,
+                width: 190,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    album.imageUrl,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
                         ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/camera.svg",
-                              height: 18,
-                              width: 18,
-                            ),
-                            Text(
-                              album.title,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: kDefaultPadding * 1.5,
-                      vertical: kDefaultPadding / 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: model.setCategoryColor(0),
-                      // color: model.setCategoryColor(product.categoryId),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(22),
-                        bottomRight: Radius.circular(22),
-                      ),
-                    ),
-                    child: Text(
-                      "新着",
-                      // product.categoryId.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+            // 写真コメント
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: SizedBox(
+                height: 136,
+                width: size.width - 190,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Spacer(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 40,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/icons/calendar.svg",
+                                height: 18,
+                                width: 18,
+                              ),
+                              Text(
+                                DateFormat('yyyy/MM/dd')
+                                    .format(album.createdAt.toDate())
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/icons/camera.svg",
+                                height: 18,
+                                width: 18,
+                              ),
+                              Text(
+                                album.title,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: kDefaultPadding * 1.5,
+                        vertical: kDefaultPadding / 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: model.setCategoryColor(0),
+                        // color: model.setCategoryColor(product.categoryId),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(22),
+                          bottomRight: Radius.circular(22),
+                        ),
+                      ),
+                      child: Text(
+                        "新着",
+                        // product.categoryId.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

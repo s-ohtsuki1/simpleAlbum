@@ -22,7 +22,6 @@ class AlbumListModel extends ChangeNotifier {
     final docs = await Firestore.instance.collection('books').getDocuments();
     final books = docs.documents.map((doc) => Book(doc)).toList();
     this.books = books;
-    endLoading();
     notifyListeners();
   }
 

@@ -18,21 +18,7 @@ class AlbumListScreen extends StatelessWidget {
         appBar: buildAlbumAppBar(),
         body: Consumer<AlbumListModel>(
           builder: (context, model, child) {
-            return FutureBuilder(
-              future: model.fetchBooks(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                // if (dataSnapshot.connectionState == ConnectionState.waiting) {
-                //   return
-                // }
-                // return Body();
-                if (!model.isLoading) {
-                  return Body();
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            );
+            return Body();
           },
         ),
         floatingActionButton: Consumer<AlbumListModel>(
