@@ -18,6 +18,7 @@ class AlbumListScreen extends StatelessWidget {
         appBar: buildAlbumAppBar(),
         body: Consumer<AlbumListModel>(
           builder: (context, model, child) {
+            model.fetchBooks();
             return Body();
           },
         ),

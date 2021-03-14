@@ -1,15 +1,21 @@
+import 'package:favorite/model/book.dart';
 import 'package:favorite/screen/album_detail/components/body.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
 class AlbumDetailScreen extends StatelessWidget {
+  final Book album;
+
+  const AlbumDetailScreen({Key key, this.album}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.yellow[100],
       appBar: buildAlbumDetailAppbar(),
-      body: Body(),
+      body: Body(
+        album: album,
+      ),
     );
   }
 

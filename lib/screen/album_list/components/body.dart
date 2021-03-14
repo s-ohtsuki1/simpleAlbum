@@ -41,7 +41,9 @@ class Body extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AlbumDetailScreen(),
+                        builder: (context) => AlbumDetailScreen(
+                          album: model.books[index],
+                        ),
                       ),
                     );
                   },
