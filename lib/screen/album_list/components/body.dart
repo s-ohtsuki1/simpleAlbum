@@ -43,6 +43,7 @@ class Body extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => AlbumDetailScreen(
                           album: model.books[index],
+                          albumModel: model,
                         ),
                       ),
                     );

@@ -1,21 +1,33 @@
+import 'package:favorite/model/album_detail/album_detail_model.dart';
+import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:favorite/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../size_config.dart';
 import 'album_poster.dart';
 
 class Body extends StatelessWidget {
   final Book album;
+  final AlbumListModel albumModel;
 
-  const Body({Key key, this.album}) : super(key: key);
+  const Body({
+    Key key,
+    this.album,
+    this.albumModel,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    AlbumDetailModel favoriteModel =
+        Provider.of<AlbumDetailModel>(context, listen: true);
+
     return Column(
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Column(
             children: [
               Center(
@@ -33,14 +45,15 @@ class Body extends StatelessWidget {
                         vertical: kDefaultPadding / 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.red,
-                        // color: model.setCategoryColor(product.categoryId),
+                        color: albumModel.setCategoryColor(album.categoryId),
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Text(
-                        "カテゴリ1",
-                        // product.categoryId.toString(),
-                        style: TextStyle(color: Colors.white),
+                        "アルバム" + album.categoryId.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     SvgPicture.asset(
@@ -49,24 +62,48 @@ class Body extends StatelessWidget {
                       width: 18,
                     ),
                     Text(
-                      "2021/03/03",
-                      // DateFormat('yyyy/MM/dd')
-                      //     .format()
-                      //     .toString(),
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      DateFormat('yyyy/MM/dd')
+                          .format(album.createdAt.toDate())
+                          .toString(),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-                child: Text(
-                  "遅めの初詣に行った時に食べたやつ。美味だった。",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: kDefaultPadding,
+                  vertical: kDefaultPadding / 2,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/camera.svg",
+                          height: 18,
+                          width: 18,
+                        ),
+                        Text(
+                          album.title,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "遅めの初詣に行った時に食べたやつ。美味だった。",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: kDefaultPadding),
@@ -74,35 +111,52 @@ class Body extends StatelessWidget {
           ),
         ),
         Spacer(),
-        Container(
-          // margin: EdgeInsets.all(kDefaultPadding / 2),
-          padding: EdgeInsets.symmetric(
-            horizontal: kDefaultPadding,
-            vertical: kDefaultPadding / 2,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.brown,
-            // borderRadius: BorderRadius.circular(30),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.favorite,
-                color: Colors.pinkAccent,
-                size: 36,
-              ),
-              SizedBox(width: kDefaultPadding / 2),
-              Text(
-                "お気に入り",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: SizeConfig.screenWidth / 2,
+                  height: kDefaultPadding * 3,
+                  color: Colors.orange[300],
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.lightBlue,
+                      size: 36,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: SizeConfig.screenWidth / 2,
+                  height: kDefaultPadding * 3,
+                  color: Colors.brown[600],
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 36,
+                      color: !favoriteModel.isFavorite
+                          ? Colors.grey
+                          : Colors.pinkAccent,
+                    ),
+                    onPressed: () {
+                      favoriteModel.changeFavorite();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
