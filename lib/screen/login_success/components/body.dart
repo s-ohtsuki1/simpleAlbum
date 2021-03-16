@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
             color: Colors.brown,
           ),
         ),
-        Spacer(),
+        Spacer(flex: 1),
         SizedBox(
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
