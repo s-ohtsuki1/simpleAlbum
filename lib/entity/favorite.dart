@@ -5,11 +5,9 @@ class Favorite {
     documentId = doc.documentID;
     userId = doc['userId'];
     picDocumentId = doc['picDocumentId'];
-    isFavorite = doc['isFavorite'];
   }
 
   String documentId;
   String picDocumentId;
   int userId;
-  bool isFavorite;
 }
