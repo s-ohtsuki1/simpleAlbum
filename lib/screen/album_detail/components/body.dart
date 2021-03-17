@@ -1,6 +1,6 @@
+import 'package:favorite/entity/album.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +11,7 @@ import '../../../size_config.dart';
 import 'album_poster.dart';
 
 class Body extends StatelessWidget {
-  final Book album;
+  final Album album;
   final AlbumListModel albumModel;
 
   const Body({
@@ -120,14 +120,18 @@ class Body extends StatelessWidget {
                 Container(
                   width: SizeConfig.screenWidth / 2,
                   height: kDefaultPadding * 3,
-                  color: Colors.orange[300],
+                  color: Colors.orange,
                   child: IconButton(
                     icon: Icon(
                       Icons.arrow_back_rounded,
                       color: Colors.lightBlue,
-                      size: 36,
+                      size: 42,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      if (favoriteModel.isFavorite)
+                        favoriteModel.picDocumentId = album.documentId;
+                      // favoriteModel.userId =
+                      await favoriteModel.saveFavorite();
                       Navigator.pop(context);
                     },
                   ),
@@ -145,9 +149,9 @@ class Body extends StatelessWidget {
                     icon: Icon(
                       Icons.favorite,
                       size: 36,
-                      color: !favoriteModel.isFavorite
-                          ? Colors.grey
-                          : Colors.pinkAccent,
+                      color: favoriteModel.isFavorite
+                          ? Colors.pinkAccent
+                          : Colors.grey,
                     ),
                     onPressed: () {
                       favoriteModel.changeFavorite();

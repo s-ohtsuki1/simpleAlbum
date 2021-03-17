@@ -1,5 +1,5 @@
+import 'package:favorite/entity/album.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +16,7 @@ class AlbumCard extends StatelessWidget {
   }) : super(key: key);
 
   final int itemIndex;
-  final Book album;
+  final Album album;
   final Function press;
 
   @override
@@ -112,7 +112,9 @@ class AlbumCard extends StatelessWidget {
                                     .format(album.createdAt.toDate())
                                     .toString(),
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
