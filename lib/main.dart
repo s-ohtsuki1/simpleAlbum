@@ -1,22 +1,14 @@
-import 'package:favorite/presentaition/book_list/book_list_page.dart';
-import 'package:favorite/screen/sign_in/sign_in_screen.dart';
+import 'package:favorite/screen/album_list/album_list_screen.dart';
 import 'package:favorite/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'model/auth_user_model.dart';
 import 'theme.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class UserState extends ChangeNotifier {
-  FirebaseUser user;
-  void setUser(FirebaseUser currentUser) {
-    user = currentUser;
-    notifyListeners();
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -27,11 +19,10 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<UserState>.value(
       value: user,
       child: MaterialApp(
-        //デバックラベル非表示
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: theme(),
-        home: SplashScreen(),
+        home: LoginCheck(),
       ),
     );
   }
@@ -52,13 +43,13 @@ class _LoginCheckState extends State<LoginCheck> {
     if (currentUser == null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SignInScreen()),
+        MaterialPageRoute(builder: (context) => SplashScreen()),
       );
     } else {
       userState.setUser(currentUser);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BookListPage()),
+        MaterialPageRoute(builder: (context) => AlbumListScreen()),
       );
     }
   }
