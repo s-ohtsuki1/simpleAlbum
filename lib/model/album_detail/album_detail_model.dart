@@ -16,16 +16,14 @@ class AlbumDetailModel extends ChangeNotifier {
   }
 
   // お気に入り追加
-  Future addBook() async {
-    await Firestore.instance.collection('favorite').add(
-      {
-        'userId': userId,
-        'picDocumentId': picDocumentId,
-        'isFavorite': isFavorite,
-        'createdAt': Timestamp.now(),
-      },
-    );
+  Future saveFavorite() async {
+    if (isFavorite)
+      await Firestore.instance.collection('favorites').add(
+        {
+          'userId': userId,
+          'picDocumentId': picDocumentId,
+          'createdAt': Timestamp.now(),
+        },
+      );
   }
-
-  // お気に入り解除
 }
