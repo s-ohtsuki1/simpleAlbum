@@ -9,5 +9,5 @@ class Favorite {
 
   String documentId;
   String picDocumentId;
-  int userId;
+  String userId;
 }

@@ -4,6 +4,7 @@ class Album {
   Album(DocumentSnapshot doc) {
     documentId = doc.documentID;
     title = doc['title'];
+    coment = doc['coment'];
     categoryId = doc['categoryId'];
     imageUrl = doc['imageUrl'];
     createdAt = doc['createdAt'];
@@ -11,7 +12,9 @@ class Album {
 
   String documentId;
   String title;
+  String coment;
   int categoryId;
   String imageUrl;
   Timestamp createdAt;
+  bool preIsFavorite = false;
 }
