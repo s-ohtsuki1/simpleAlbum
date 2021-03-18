@@ -6,10 +6,10 @@ import '../../../size_config.dart';
 class AlbumPoster extends StatelessWidget {
   const AlbumPoster({
     Key key,
-    this.album,
+    this.picture,
   }) : super(key: key);
 
-  final Album album;
+  final Album picture;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AlbumPoster extends StatelessWidget {
       child: Column(
         children: [
           Image.network(
-            album.imageUrl,
+            picture.imageUrl,
             height: SizeConfig.screenWidth,
             width: double.infinity,
             fit: BoxFit.cover,

@@ -1,4 +1,5 @@
 import 'package:favorite/constants.dart';
+import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:favorite/screen/album_detail/album_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,10 @@ import 'search_box.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);
+    AlbumListModel listModel =
+        Provider.of<AlbumListModel>(context, listen: false);
+    AlbumDetailModel detailModel =
+        Provider.of<AlbumDetailModel>(context, listen: false);
     return Column(
       children: [
         SearchBox(onChanged: (value) {}),
@@ -33,17 +37,20 @@ class Body extends StatelessWidget {
                 ),
               ),
               ListView.builder(
-                itemCount: model.books.length,
+                itemCount: listModel.pictures.length,
                 itemBuilder: (context, index) => AlbumCard(
                   itemIndex: index,
-                  album: model.books[index],
-                  press: () {
+                  picture: listModel.pictures[index],
+                  press: () async {
+                    await detailModel
+                        .fetchFavorite(listModel.pictures[index].documentId);
+                    listModel.pictures[index].preIsFavorite =
+                        detailModel.isFavorite;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => AlbumDetailScreen(
-                          album: model.books[index],
-                          albumModel: model,
+                          picture: listModel.pictures[index],
                         ),
                       ),
                     );

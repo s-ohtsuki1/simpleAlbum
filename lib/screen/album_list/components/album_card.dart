@@ -11,12 +11,12 @@ class AlbumCard extends StatelessWidget {
   const AlbumCard({
     Key key,
     this.itemIndex,
-    this.album,
+    this.picture,
     this.press,
   }) : super(key: key);
 
   final int itemIndex;
-  final Album album;
+  final Album picture;
   final Function press;
 
   @override
@@ -63,7 +63,7 @@ class AlbumCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    album.imageUrl,
+                    picture.imageUrl,
                     fit: BoxFit.cover,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent loadingProgress) {
@@ -109,7 +109,7 @@ class AlbumCard extends StatelessWidget {
                               ),
                               Text(
                                 DateFormat('yyyy/MM/dd')
-                                    .format(album.createdAt.toDate())
+                                    .format(picture.createdAt.toDate())
                                     .toString(),
                                 style: TextStyle(
                                   fontSize: 18,
@@ -127,7 +127,7 @@ class AlbumCard extends StatelessWidget {
                                 width: 18,
                               ),
                               Text(
-                                album.title,
+                                picture.title,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -144,7 +144,6 @@ class AlbumCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: model.setCategoryColor(0),
-                        // color: model.setCategoryColor(product.categoryId),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(22),
                           bottomRight: Radius.circular(22),

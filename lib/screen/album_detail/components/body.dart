@@ -11,18 +11,18 @@ import '../../../size_config.dart';
 import 'album_poster.dart';
 
 class Body extends StatelessWidget {
-  final Album album;
-  final AlbumListModel albumModel;
+  final Album picture;
 
   const Body({
     Key key,
-    this.album,
-    this.albumModel,
+    this.picture,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    AlbumListModel albumModel =
+        Provider.of<AlbumListModel>(context, listen: false);
     AlbumDetailModel favoriteModel =
-        Provider.of<AlbumDetailModel>(context, listen: true);
+        Provider.of<AlbumDetailModel>(context, listen: false);
 
     return Column(
       children: [
@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: AlbumPoster(album: album),
+                child: AlbumPoster(picture: picture),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
@@ -45,11 +45,11 @@ class Body extends StatelessWidget {
                         vertical: kDefaultPadding / 4,
                       ),
                       decoration: BoxDecoration(
-                        color: albumModel.setCategoryColor(album.categoryId),
+                        color: albumModel.setCategoryColor(picture.categoryId),
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Text(
-                        "アルバム" + album.categoryId.toString(),
+                        "アルバム" + picture.categoryId.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class Body extends StatelessWidget {
                     ),
                     Text(
                       DateFormat('yyyy/MM/dd')
-                          .format(album.createdAt.toDate())
+                          .format(picture.createdAt.toDate())
                           .toString(),
                       style: TextStyle(
                         fontSize: 18,
@@ -88,7 +88,7 @@ class Body extends StatelessWidget {
                           width: 18,
                         ),
                         Text(
-                          album.title,
+                          picture.title,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class Body extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      "遅めの初詣に行った時に食べたやつ。美味だった。",
+                      picture.coment,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -128,10 +128,10 @@ class Body extends StatelessWidget {
                       size: 42,
                     ),
                     onPressed: () async {
-                      if (favoriteModel.isFavorite)
-                        favoriteModel.picDocumentId = album.documentId;
-                      // favoriteModel.userId =
-                      await favoriteModel.saveFavorite();
+                      await favoriteModel.saveFavorite(
+                        picture.documentId,
+                        picture.preIsFavorite,
+                      );
                       Navigator.pop(context);
                     },
                   ),
@@ -149,7 +149,8 @@ class Body extends StatelessWidget {
                     icon: Icon(
                       Icons.favorite,
                       size: 36,
-                      color: favoriteModel.isFavorite
+                      color: favoriteModel.isFavorite != null &&
+                              favoriteModel.isFavorite
                           ? Colors.pinkAccent
                           : Colors.grey,
                     ),
