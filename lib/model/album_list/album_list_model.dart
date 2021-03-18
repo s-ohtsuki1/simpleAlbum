@@ -3,7 +3,7 @@ import 'package:favorite/entity/album.dart';
 import 'package:flutter/material.dart';
 
 class AlbumListModel extends ChangeNotifier {
-  List<Album> books = [];
+  List<Album> pictures = [];
   bool isLoading = false;
 
   startLoading() {
@@ -17,11 +17,13 @@ class AlbumListModel extends ChangeNotifier {
   }
 
   // 本一覧取得
-  Future fetchBooks() async {
-    final docs = await Firestore.instance.collection('books').getDocuments();
-    final books = docs.documents.map((doc) => Album(doc)).toList();
-    this.books = books;
-    notifyListeners();
+  void getAlbums() {
+    final snapshots = Firestore.instance.collection('books').snapshots();
+    snapshots.listen((snapshot) {
+      final pictures = snapshot.documents.map((doc) => Album(doc)).toList();
+      this.pictures = pictures;
+      notifyListeners();
+    });
   }
 
   // 本の削除
@@ -45,6 +47,8 @@ class AlbumListModel extends ChangeNotifier {
         return Colors.green;
       case 4:
         return Colors.purple[500];
+      default:
+        return Colors.red[700];
     }
   }
 }
