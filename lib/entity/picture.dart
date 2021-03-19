@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Album {
-  Album(DocumentSnapshot doc) {
+class Picture {
+  Picture(DocumentSnapshot doc) {
     documentId = doc.documentID;
     title = doc['title'];
     coment = doc['coment'];
-    categoryId = doc['categoryId'];
+    albumNo = doc['albumNo'];
     imageUrl = doc['imageUrl'];
     createdAt = doc['createdAt'];
   }
@@ -13,7 +13,7 @@ class Album {
   String documentId;
   String title;
   String coment;
-  int categoryId;
+  int albumNo;
   String imageUrl;
   Timestamp createdAt;
   bool preIsFavorite = false;
