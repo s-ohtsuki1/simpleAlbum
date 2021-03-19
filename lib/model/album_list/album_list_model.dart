@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite/entity/album.dart';
+import 'package:favorite/entity/picture.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AlbumListModel extends ChangeNotifier {
-  List<Album> pictures = [];
+  List<Picture> pictures = [];
+  int selectAlbumNo = 0;
   bool isLoading = false;
 
   startLoading() {
@@ -16,18 +18,50 @@ class AlbumListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 本一覧取得
-  void getAlbums() {
-    final snapshots = Firestore.instance.collection('books').snapshots();
-    snapshots.listen((snapshot) {
-      final pictures = snapshot.documents.map((doc) => Album(doc)).toList();
-      this.pictures = pictures;
-      notifyListeners();
-    });
+  changeAlbumNo(int albumNo) {
+    selectAlbumNo = albumNo;
+    notifyListeners();
+  }
+
+  // 最新写真一覧取得
+  void getNewPicture() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    // 最新10件分取得
+    final snapshots = Firestore.instance
+        .collection('albums/' + user.uid + '/album')
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .snapshots();
+    snapshots.listen(
+      (snapshot) {
+        final pictures = snapshot.documents.map((doc) => Picture(doc)).toList();
+        this.pictures = pictures;
+        notifyListeners();
+      },
+    );
+  }
+
+  // アルバムNOで写真一覧取得
+  void getAlbumNoPicture() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    final snapshots = Firestore.instance
+        .collection('albums/' + user.uid + '/album')
+        .where('albumNo', isEqualTo: selectAlbumNo)
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+    snapshots.listen(
+      (snapshot) {
+        final pictures = snapshot.documents.map((doc) => Picture(doc)).toList();
+        this.pictures = pictures;
+        notifyListeners();
+      },
+    );
   }
 
   // 本の削除
-  Future deleteBook(Album book) async {
+  Future deleteBook(Picture book) async {
     await Firestore.instance
         .collection('books')
         .document(book.documentId)

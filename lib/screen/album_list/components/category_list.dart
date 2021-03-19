@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryList extends StatelessWidget {
-  final int selectedIndex = 5;
   final List categories = [
     '最新10件',
     'アルバム1',
@@ -17,13 +16,17 @@ class CategoryList extends StatelessWidget {
     AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);
     return Container(
       margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 50),
-      height: 30,
+      height: 50,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
-            // TODO カテゴリ選択値の更新
+            model.changeAlbumNo(index);
+            if (index == 0)
+              model.getNewPicture();
+            else
+              model.getAlbumNoPicture();
           },
           child: Container(
             alignment: Alignment.center,
@@ -33,8 +36,8 @@ class CategoryList extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
             decoration: BoxDecoration(
-              color: index == selectedIndex
-                  ? Colors.white.withOpacity(0.3)
+              color: index == model.selectAlbumNo
+                  ? Colors.yellow[100]
                   : model.setCategoryColor(index),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
@@ -49,7 +52,8 @@ class CategoryList extends StatelessWidget {
             child: Text(
               categories[index],
               style: TextStyle(
-                color: Colors.white,
+                color:
+                    index == model.selectAlbumNo ? kPrimaryColor : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
