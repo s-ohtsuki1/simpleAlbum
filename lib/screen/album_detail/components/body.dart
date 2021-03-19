@@ -1,4 +1,4 @@
-import 'package:favorite/entity/album.dart';
+import 'package:favorite/entity/picture.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import '../../../size_config.dart';
 import 'album_poster.dart';
 
 class Body extends StatelessWidget {
-  final Album picture;
+  final Picture picture;
 
   const Body({
     Key key,
@@ -45,11 +45,11 @@ class Body extends StatelessWidget {
                         vertical: kDefaultPadding / 4,
                       ),
                       decoration: BoxDecoration(
-                        color: albumModel.setCategoryColor(picture.categoryId),
+                        color: albumModel.setCategoryColor(picture.albumNo),
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Text(
-                        "アルバム" + picture.categoryId.toString(),
+                        "アルバム" + picture.albumNo.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

@@ -1,4 +1,4 @@
-import 'package:favorite/entity/album.dart';
+import 'package:favorite/entity/picture.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
@@ -9,7 +9,7 @@ class AlbumPoster extends StatelessWidget {
     this.picture,
   }) : super(key: key);
 
-  final Album picture;
+  final Picture picture;
 
   @override
   Widget build(BuildContext context) {

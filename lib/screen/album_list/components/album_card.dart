@@ -1,4 +1,4 @@
-import 'package:favorite/entity/album.dart';
+import 'package:favorite/entity/picture.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +16,7 @@ class AlbumCard extends StatelessWidget {
   }) : super(key: key);
 
   final int itemIndex;
-  final Album picture;
+  final Picture picture;
   final Function press;
 
   @override
@@ -143,15 +143,16 @@ class AlbumCard extends StatelessWidget {
                         vertical: kDefaultPadding / 4,
                       ),
                       decoration: BoxDecoration(
-                        color: model.setCategoryColor(0),
+                        color: model.setCategoryColor(model.selectAlbumNo),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(22),
                           bottomRight: Radius.circular(22),
                         ),
                       ),
                       child: Text(
-                        "新着",
-                        // product.categoryId.toString(),
+                        model.selectAlbumNo == 0
+                            ? '新着'
+                            : 'アルバム' + model.selectAlbumNo.toString(),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
