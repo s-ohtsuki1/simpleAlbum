@@ -18,7 +18,10 @@ class Body extends StatelessWidget {
         Provider.of<AlbumDetailModel>(context, listen: false);
     return Column(
       children: [
-        SearchBox(onChanged: (value) {}),
+        // SearchBox(onChanged: (value) {}),
+        SizedBox(
+          height: kDefaultPadding,
+        ),
         CategoryList(),
         SizedBox(
           height: kDefaultPadding / 2,
