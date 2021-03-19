@@ -15,7 +15,7 @@ class AlbumListScreen extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AlbumListModel>(
-          create: (_) => AlbumListModel()..getAlbums(),
+          create: (_) => AlbumListModel()..getNewPicture(),
         ),
         ChangeNotifierProvider<AlbumDetailModel>(
           create: (_) => AlbumDetailModel(),
