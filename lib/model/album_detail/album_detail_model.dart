@@ -7,7 +7,6 @@ class AlbumDetailModel extends ChangeNotifier {
   List<Favorite> favorit = [];
   String favoriteId;
   FirebaseUser user;
-  // String picDocumentId = '';
   bool isFavorite;
 
   changeFavorite() {
@@ -24,8 +23,7 @@ class AlbumDetailModel extends ChangeNotifier {
     this.favorit = [];
     user = await FirebaseAuth.instance.currentUser();
     final docs = await Firestore.instance
-        .collection('favorites')
-        .where("userId", isEqualTo: user.uid)
+        .collection('albums/' + user.uid + '/favorite')
         .where("picDocumentId", isEqualTo: picDocumentId)
         .limit(1)
         .getDocuments();
@@ -44,9 +42,10 @@ class AlbumDetailModel extends ChangeNotifier {
     if (!preIsFavorite && isFavorite) {
       user = await FirebaseAuth.instance.currentUser();
 
-      await Firestore.instance.collection('favorites').add(
+      await Firestore.instance
+          .collection('albums/' + user.uid + '/favorite')
+          .add(
         {
-          'userId': user.uid,
           'picDocumentId': picDocumentId,
           'createdAt': Timestamp.now(),
         },
@@ -54,7 +53,7 @@ class AlbumDetailModel extends ChangeNotifier {
     }
     if (preIsFavorite && !isFavorite) {
       await Firestore.instance
-          .collection('favorites')
+          .collection('albums/' + user.uid + '/favorite')
           .document(favoriteId)
           .delete();
     }
