@@ -1,10 +1,10 @@
-import 'package:favorite/screen/album_list/album_list_screen.dart';
+import 'package:favorite/model/user_state_model.dart';
+import 'package:favorite/screen/login_success/login_success_screen.dart';
 import 'package:favorite/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'model/auth_user_model.dart';
 import 'theme.dart';
 
 void main() {
@@ -12,11 +12,11 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final UserState user = UserState();
+  final UserStateModel user = UserStateModel();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserState>.value(
+    return ChangeNotifierProvider<UserStateModel>.value(
       value: user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -39,7 +39,7 @@ class _LoginCheckState extends State<LoginCheck> {
   //ログイン状態のチェック(非同期で行う)
   void checkUser() async {
     final currentUser = await FirebaseAuth.instance.currentUser();
-    final userState = Provider.of<UserState>(context, listen: false);
+    final userState = Provider.of<UserStateModel>(context, listen: false);
     if (currentUser == null) {
       Navigator.push(
         context,
@@ -49,7 +49,7 @@ class _LoginCheckState extends State<LoginCheck> {
       userState.setUser(currentUser);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AlbumListScreen()),
+        MaterialPageRoute(builder: (context) => LoginSuccessScreen()),
       );
     }
   }
