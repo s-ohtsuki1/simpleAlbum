@@ -37,8 +37,8 @@ class AlbumListScreen extends StatelessWidget {
             builder: (context, model, child) {
               return Stack(
                 children: [
-                  SideManu(),
                   Body(),
+                  SideManu(),
                 ],
               );
             },

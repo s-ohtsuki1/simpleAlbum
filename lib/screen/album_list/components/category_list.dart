@@ -31,7 +31,7 @@ class CategoryList extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
-              left: kDefaultPadding,
+              left: index == 0 ? kDefaultPadding * 2 : kDefaultPadding,
               right: index == categories.length - 1 ? kDefaultPadding : 0,
             ),
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),

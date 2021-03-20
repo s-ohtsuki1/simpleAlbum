@@ -21,9 +21,6 @@ class TopMenuBar extends StatelessWidget {
               Icons.menu,
               color: Colors.white,
             ),
-            onTap: () {
-              model.sideMenuOpenClose();
-            },
           ),
           Text(
             "Shimple Album",

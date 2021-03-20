@@ -1,5 +1,5 @@
 import 'package:favorite/model/user_state_model.dart';
-import 'package:favorite/screen/login_success/login_success_screen.dart';
+import 'package:favorite/screen/album_list/album_list_screen.dart';
 import 'package:favorite/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,7 +49,7 @@ class _LoginCheckState extends State<LoginCheck> {
       userState.setUser(currentUser);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginSuccessScreen()),
+        MaterialPageRoute(builder: (context) => AlbumListScreen()),
       );
     }
   }
