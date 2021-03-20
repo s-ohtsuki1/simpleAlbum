@@ -13,8 +13,6 @@ class AlbumPoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AlbumListModel model = Provider.of<AlbumListModel>(context, listen: false);
-
     return Container(
       child: Column(
         children: [

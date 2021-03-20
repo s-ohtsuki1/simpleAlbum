@@ -37,7 +37,7 @@ class AlbumDetailModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // お気に入り追加
+  // お気に入り追加/解除（削除）
   Future saveFavorite(String picDocumentId, bool preIsFavorite) async {
     if (!preIsFavorite && isFavorite) {
       user = await FirebaseAuth.instance.currentUser();

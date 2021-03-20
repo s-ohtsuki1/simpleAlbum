@@ -4,7 +4,7 @@ class Picture {
   Picture(DocumentSnapshot doc) {
     documentId = doc.documentID;
     title = doc['title'];
-    coment = doc['coment'];
+    comment = doc['comment'];
     albumNo = doc['albumNo'];
     imageUrl = doc['imageUrl'];
     createdAt = doc['createdAt'];
@@ -12,7 +12,7 @@ class Picture {
 
   String documentId;
   String title;
-  String coment;
+  String comment;
   int albumNo;
   String imageUrl;
   Timestamp createdAt;
