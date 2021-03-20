@@ -84,82 +84,85 @@ class AlbumCard extends StatelessWidget {
               ),
             ),
             // 写真コメント
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: SizedBox(
-                height: 136,
-                width: size.width - 190,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 40,
-                      ),
+            model.isSideMenuOpen
+                ? SizedBox()
+                : Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: SizedBox(
+                      height: 136,
+                      width: size.width - 190,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/calendar.svg",
-                                height: 18,
-                                width: 18,
-                              ),
-                              Text(
-                                DateFormat('yyyy/MM/dd')
-                                    .format(picture.createdAt.toDate())
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                          Spacer(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 40,
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/calendar.svg",
+                                      height: 18,
+                                      width: 18,
+                                    ),
+                                    Text(
+                                      DateFormat('yyyy/MM/dd')
+                                          .format(picture.createdAt.toDate())
+                                          .toString(),
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/camera.svg",
+                                      height: 18,
+                                      width: 18,
+                                    ),
+                                    Text(
+                                      picture.title,
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 10),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/camera.svg",
-                                height: 18,
-                                width: 18,
+                          Spacer(),
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding * 1.5,
+                              vertical: kDefaultPadding / 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  model.setCategoryColor(model.selectAlbumNo),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(22),
+                                bottomRight: Radius.circular(22),
                               ),
-                              Text(
-                                picture.title,
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
+                            ),
+                            child: Text(
+                              model.selectAlbumNo == 0
+                                  ? '新着'
+                                  : 'アルバム' + model.selectAlbumNo.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Spacer(),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding * 1.5,
-                        vertical: kDefaultPadding / 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: model.setCategoryColor(model.selectAlbumNo),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(22),
-                          bottomRight: Radius.circular(22),
-                        ),
-                      ),
-                      child: Text(
-                        model.selectAlbumNo == 0
-                            ? '新着'
-                            : 'アルバム' + model.selectAlbumNo.toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ],
         ),
       ),

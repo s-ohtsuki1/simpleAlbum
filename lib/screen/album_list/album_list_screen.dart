@@ -1,6 +1,8 @@
+import 'package:favorite/components/side_menu.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
+import 'package:favorite/model/sign_in/sign_in_model.dart';
 import 'package:favorite/presentaition/add_book/add_book_page.dart';
 import 'package:favorite/screen/album_list/components/body.dart';
 import 'package:favorite/size_config.dart';
@@ -20,13 +22,21 @@ class AlbumListScreen extends StatelessWidget {
         ChangeNotifierProvider<AlbumDetailModel>(
           create: (_) => AlbumDetailModel(),
         ),
+        ChangeNotifierProvider<SignInModel>(
+          create: (_) => SignInModel(),
+        ),
       ],
       child: Scaffold(
         backgroundColor: kPrimaryColor,
-        appBar: buildAlbumAppBar(),
+        // appBar: buildAlbumAppBar(),
         body: Consumer<AlbumListModel>(
           builder: (context, model, child) {
-            return Body();
+            return Stack(
+              children: [
+                SideManu(),
+                Body(),
+              ],
+            );
           },
         ),
         floatingActionButton: Consumer<AlbumListModel>(

@@ -7,6 +7,7 @@ class AlbumListModel extends ChangeNotifier {
   List<Picture> pictures = [];
   int selectAlbumNo = 0;
   bool isLoading = false;
+  bool isSideMenuOpen = false;
 
   startLoading() {
     isLoading = true;
@@ -20,6 +21,11 @@ class AlbumListModel extends ChangeNotifier {
 
   changeAlbumNo(int albumNo) {
     selectAlbumNo = albumNo;
+    notifyListeners();
+  }
+
+  sideMenuOpenClose() {
+    isSideMenuOpen = isSideMenuOpen ? false : true;
     notifyListeners();
   }
 
@@ -72,9 +78,9 @@ class AlbumListModel extends ChangeNotifier {
   Color setCategoryColor(int categoryId) {
     switch (categoryId) {
       case 0:
-        return Colors.pink[600];
+        return Colors.red[600];
       case 1:
-        return Colors.red[700];
+        return Colors.pink[600];
       case 2:
         return Colors.blue;
       case 3:
