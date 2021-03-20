@@ -23,12 +23,15 @@ class SignInModel extends ChangeNotifier {
 
   // ログイン
   Future login() async {
-    // checkVal();
-
     // ログイン
     await _auth.signInWithEmailAndPassword(
       email: mail,
       password: password,
     );
+  }
+
+  // ログアウト
+  void logOut() async {
+    await _auth.signOut();
   }
 }
