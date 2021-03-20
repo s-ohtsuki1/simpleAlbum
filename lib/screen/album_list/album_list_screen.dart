@@ -1,4 +1,4 @@
-import 'package:favorite/components/side_menu.dart';
+import 'package:favorite/components/side_menu/side_menu.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
