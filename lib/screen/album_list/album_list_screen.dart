@@ -26,46 +26,51 @@ class AlbumListScreen extends StatelessWidget {
           create: (_) => SignInModel(),
         ),
       ],
-      child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        // appBar: buildAlbumAppBar(),
-        body: Consumer<AlbumListModel>(
-          builder: (context, model, child) {
-            return Stack(
-              children: [
-                SideManu(),
-                Body(),
-              ],
-            );
-          },
-        ),
-        floatingActionButton: Consumer<AlbumListModel>(
-          builder: (context, model, child) {
-            return FloatingActionButton(
-              child: Icon(Icons.add),
-              backgroundColor: kPrimaryColor,
-              // 新規追加画面へ
-              onPressed: () async {
-                await Navigator.push(
-                  // doneMessage = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) => AddBookPage(),
-                  ),
-                );
-                // if (doneMessage != '' && doneMessage != null) {
-                //   Scaffold.of(context).showSnackBar(
-                //     SnackBar(
-                //       content: Text(doneMessage),
-                //       backgroundColor: Colors.lightBlueAccent,
-                //     ),
-                //   );
-                // }
-                // await model.fetchBooks();
-              },
-            );
-          },
+      child: WillPopScope(
+        onWillPop: () async {
+          return true;
+        },
+        child: Scaffold(
+          backgroundColor: kPrimaryColor,
+          // appBar: buildAlbumAppBar(),
+          body: Consumer<AlbumListModel>(
+            builder: (context, model, child) {
+              return Stack(
+                children: [
+                  SideManu(),
+                  Body(),
+                ],
+              );
+            },
+          ),
+          floatingActionButton: Consumer<AlbumListModel>(
+            builder: (context, model, child) {
+              return FloatingActionButton(
+                child: Icon(Icons.add),
+                backgroundColor: kPrimaryColor,
+                // 新規追加画面へ
+                onPressed: () async {
+                  await Navigator.push(
+                    // doneMessage = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => AddBookPage(),
+                    ),
+                  );
+                  // if (doneMessage != '' && doneMessage != null) {
+                  //   Scaffold.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: Text(doneMessage),
+                  //       backgroundColor: Colors.lightBlueAccent,
+                  //     ),
+                  //   );
+                  // }
+                  // await model.fetchBooks();
+                },
+              );
+            },
+          ),
         ),
       ),
     );

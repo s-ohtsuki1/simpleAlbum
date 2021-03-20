@@ -17,15 +17,20 @@ class SignInScreen extends StatelessWidget {
             currentFocus.unfocus();
           }
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: appBarTextStyle("ログイン"),
-            shape: appBarShape(),
+        child: WillPopScope(
+          onWillPop: () async {
+            return true;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: appBarTextStyle("ログイン"),
+              shape: appBarShape(),
+            ),
+            resizeToAvoidBottomInset: false,
+            body: Consumer<SignInModel>(builder: (context, model, child) {
+              return Body();
+            }),
           ),
-          resizeToAvoidBottomInset: false,
-          body: Consumer<SignInModel>(builder: (context, model, child) {
-            return Body();
-          }),
         ),
       ),
     );

@@ -7,6 +7,10 @@ class LoginSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(body: Body());
+    return WillPopScope(
+        onWillPop: () async {
+          return true;
+        },
+        child: Scaffold(body: Body()));
   }
 }
