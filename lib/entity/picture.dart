@@ -7,6 +7,7 @@ class Picture {
     comment = doc['comment'];
     albumNo = doc['albumNo'];
     imageUrl = doc['imageUrl'];
+    shotDate = doc['shotDate'];
     createdAt = doc['createdAt'];
   }
 
@@ -15,6 +16,7 @@ class Picture {
   String comment;
   int albumNo;
   String imageUrl;
+  Timestamp shotDate;
   Timestamp createdAt;
   bool preIsFavorite = false;
 }
