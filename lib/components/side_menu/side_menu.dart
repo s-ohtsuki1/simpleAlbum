@@ -1,3 +1,4 @@
+import 'package:favorite/constants.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:favorite/model/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,17 @@ class SideManu extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              color: Colors.brown[400],
+              decoration: BoxDecoration(
+                color: kSecondaryColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    spreadRadius: 0.5,
+                    blurRadius: 20.0,
+                    offset: Offset(10, 10),
+                  ),
+                ],
+              ),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: !listModel.isSideMenuOpen
@@ -56,7 +67,7 @@ class SideManu extends StatelessWidget {
               topRight: Radius.circular(10),
               bottomRight: Radius.circular(50),
             ),
-            color: Colors.brown[400],
+            color: kSecondaryColor,
           ),
           child: Icon(Icons.menu, color: Colors.white),
         ),
