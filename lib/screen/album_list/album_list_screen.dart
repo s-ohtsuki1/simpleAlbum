@@ -3,7 +3,7 @@ import 'package:favorite/constants.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
 import 'package:favorite/model/sign_in/sign_in_model.dart';
-import 'package:favorite/presentaition/add_book/add_book_page.dart';
+import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
 import 'package:favorite/screen/album_list/components/body.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class AlbumListScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       fullscreenDialog: true,
-                      builder: (context) => AddBookPage(),
+                      builder: (context) => AddEditScreen(),
                     ),
                   );
                   // if (doneMessage != '' && doneMessage != null) {
@@ -73,33 +73,6 @@ class AlbumListScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  AppBar buildAlbumAppBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      elevation: 0,
-      title: Text(
-        "アルバム一覧",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      backgroundColor: kPrimaryColor,
-      textTheme:
-          TextTheme(headline6: TextStyle(color: Colors.white, fontSize: 18)),
-      iconTheme: IconThemeData(color: Colors.white),
-      centerTitle: false,
-      actions: [
-        IconButton(
-          icon: IconButton(
-            icon: Icon(
-              Icons.notification_important_outlined,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        )
-      ],
     );
   }
 }

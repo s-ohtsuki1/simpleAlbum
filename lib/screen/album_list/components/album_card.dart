@@ -111,7 +111,7 @@ class AlbumCard extends StatelessWidget {
                                     ),
                                     Text(
                                       DateFormat('yyyy/MM/dd')
-                                          .format(picture.createdAt.toDate())
+                                          .format(picture.shotDate.toDate())
                                           .toString(),
                                       style: TextStyle(
                                         fontSize: 18,
@@ -138,27 +138,6 @@ class AlbumCard extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: kDefaultPadding * 1.5,
-                              vertical: kDefaultPadding / 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  model.setCategoryColor(model.selectAlbumNo),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(22),
-                                bottomRight: Radius.circular(22),
-                              ),
-                            ),
-                            child: Text(
-                              model.selectAlbumNo == 0
-                                  ? '新着'
-                                  : 'アルバム' + model.selectAlbumNo.toString(),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
                         ],
                       ),
                     ),
