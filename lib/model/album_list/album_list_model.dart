@@ -36,7 +36,7 @@ class AlbumListModel extends ChangeNotifier {
     // 最新10件分取得
     final snapshots = Firestore.instance
         .collection('albums/' + user.uid + '/album')
-        .orderBy('createdAt', descending: true)
+        .orderBy('shotDate', descending: true)
         .limit(10)
         .snapshots();
     snapshots.listen(
@@ -55,7 +55,7 @@ class AlbumListModel extends ChangeNotifier {
     final snapshots = Firestore.instance
         .collection('albums/' + user.uid + '/album')
         .where('albumNo', isEqualTo: selectAlbumNo)
-        .orderBy('createdAt', descending: true)
+        .orderBy('shotDate', descending: true)
         .snapshots();
     snapshots.listen(
       (snapshot) {
