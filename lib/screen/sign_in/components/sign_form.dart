@@ -53,7 +53,7 @@ class _SignFormState extends State<SignForm> {
                   _formKey.currentState.save();
                   if (errors.isEmpty) {
                     try {
-                      // await model.login();
+                      await model.login();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
