@@ -1,6 +1,6 @@
-import 'package:favorite/model/forgot_password/forgot_password_model.dart';
 import 'package:favorite/screen/forgot_password/components/body.dart';
 import 'package:favorite/theme.dart';
+import 'package:favorite/viewmodel/forgot_password/forgot_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

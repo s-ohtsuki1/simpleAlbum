@@ -1,6 +1,6 @@
-import 'package:favorite/entity/picture.dart';
-import 'package:favorite/model/album_detail/album_detail_model.dart';
-import 'package:favorite/model/album_list/album_list_model.dart';
+import 'package:favorite/model/picture.dart';
+import 'package:favorite/viewmodel/album_detail/album_detail_model.dart';
+import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -155,7 +155,9 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: EdgeInsets.symmetric(
+                vertical: 5,
+              ),
               child: GestureDetector(
                 onTap: () async {
                   await favoriteModel.saveFavorite(
@@ -165,34 +167,25 @@ class Body extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_back_rounded,
-                        color: Colors.lightBlue,
-                        size: 36,
-                      ),
-                      Text(
-                        "戻る",
-                        style: TextStyle(
-                          color: Colors.lightBlue,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                  child: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.lightBlue,
+                    size: 50,
                   ),
                 ),
               ),
             ),
-            Text(
-              "撮影日: " +
-                  DateFormat('yyyy/MM/dd')
-                      .format(picture.createdAt.toDate())
-                      .toString(),
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              child: Text(
+                "撮影日: " +
+                    DateFormat('yyyy/MM/dd')
+                        .format(picture.createdAt.toDate())
+                        .toString(),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

@@ -1,7 +1,7 @@
-import 'package:favorite/model/sign_up/sign_up_model.dart';
 import 'package:favorite/screen/sign_up/components/body.dart';
 import 'package:favorite/size_config.dart';
 import 'package:favorite/theme.dart';
+import 'package:favorite/viewmodel/sign_up/sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

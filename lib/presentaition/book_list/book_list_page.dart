@@ -1,13 +1,14 @@
+import 'package:favorite/constants.dart';
 import 'package:favorite/presentaition/add_book/add_book_page.dart';
+import 'package:favorite/theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'book_list_model.dart';
 
-// ignore: must_be_immutable
 class BookListPage extends StatelessWidget {
-  var doneMessage = '';
+  String doneMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,11 @@ class BookListPage extends StatelessWidget {
       create: (_) => BookListModel()..fetchBooks(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('本一覧'),
+          title: Icon(Icons.sensor_door_outlined, size: 36),
+          shape: appBarShape(),
+          automaticallyImplyLeading: false,
         ),
+        resizeToAvoidBottomInset: false,
         body: Consumer<BookListModel>(
           builder: (context, model, child) {
             final books = model.books;
@@ -31,8 +35,8 @@ class BookListPage extends StatelessWidget {
                           doneMessage = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddBookPage(book: book),
-                            ),
+                                // builder: (context) => AddBookPage(book: book),
+                                ),
                           );
                           if (doneMessage != '' && doneMessage != null) {
                             Scaffold.of(context).showSnackBar(SnackBar(
@@ -67,29 +71,31 @@ class BookListPage extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton:
-            Consumer<BookListModel>(builder: (context, model, child) {
-          return FloatingActionButton(
-            child: Icon(Icons.add),
-            // 新規追加画面へ
-            onPressed: () async {
-              doneMessage = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (context) => AddBookPage(),
-                ),
-              );
-              if (doneMessage != '' && doneMessage != null) {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(doneMessage),
-                  backgroundColor: Colors.lightBlueAccent,
-                ));
-              }
-              await model.fetchBooks();
-            },
-          );
-        }),
+        floatingActionButton: Consumer<BookListModel>(
+          builder: (context, model, child) {
+            return FloatingActionButton(
+              child: Icon(Icons.add),
+              backgroundColor: kPrimaryColor,
+              // 新規追加画面へ
+              onPressed: () async {
+                doneMessage = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => AddBookPage(),
+                  ),
+                );
+                if (doneMessage != '' && doneMessage != null) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(doneMessage),
+                    backgroundColor: Colors.lightBlueAccent,
+                  ));
+                }
+                await model.fetchBooks();
+              },
+            );
+          },
+        ),
       ),
     );
   }

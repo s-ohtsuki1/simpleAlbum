@@ -1,4 +1,4 @@
-import 'package:favorite/entity/picture.dart';
+import 'package:favorite/model/picture.dart';
 import 'package:favorite/presentaition/add_book/add_book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

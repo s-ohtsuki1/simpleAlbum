@@ -1,9 +1,9 @@
 import 'package:favorite/components/default_button.dart';
 import 'package:favorite/components/form_error.dart';
 import 'package:favorite/constants.dart';
-import 'package:favorite/model/sign_up/sign_up_model.dart';
 import 'package:favorite/presentaition/book_list/book_list_page.dart';
 import 'package:favorite/size_config.dart';
+import 'package:favorite/viewmodel/sign_up/sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

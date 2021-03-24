@@ -2,7 +2,7 @@ import 'package:favorite/components/default_button.dart';
 import 'package:favorite/components/form_error.dart';
 import 'package:favorite/components/no_account_text.dart';
 import 'package:favorite/constants.dart';
-import 'package:favorite/model/forgot_password/forgot_password_model.dart';
+import 'package:favorite/viewmodel/forgot_password/forgot_password_model.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

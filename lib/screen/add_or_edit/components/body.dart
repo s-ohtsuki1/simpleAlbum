@@ -1,8 +1,10 @@
 import 'package:favorite/components/default_button.dart';
-import 'package:favorite/entity/picture.dart';
+import 'package:favorite/model/picture.dart';
 import 'package:favorite/presentaition/add_book/add_book_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
@@ -18,7 +20,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final bool isUpdate = picture != null;
 
@@ -71,7 +72,7 @@ class Body extends StatelessWidget {
                   children: [
                     buildTitleForm(model, picture),
                     SizedBox(height: kDefaultPadding),
-                    buildShotDtForm(model, picture),
+                    buildShotDtForm(model, picture, context),
                     SizedBox(height: kDefaultPadding),
                     buildCommentForm(model, picture),
                     SizedBox(height: kDefaultPadding * 1.5),
@@ -136,13 +137,16 @@ class Body extends StatelessWidget {
   }
 }
 
-TextFormField buildShotDtForm(AddBookModel model, Picture picture) {
+TextFormField buildShotDtForm(AddBookModel model, Picture picture, context) {
   final shotDtEditController = TextEditingController();
   if (picture != null) {
-    shotDtEditController.text = picture.shotDate.toString();
+    shotDtEditController.text =
+        DateFormat('yyyy/MM/dd').format(picture.createdAt.toDate()).toString();
+    ;
   }
 
   return TextFormField(
+    readOnly: true,
     validator: (val) {
       if (val.isEmpty) {
         return '写真の撮影日を入力してください';
@@ -152,6 +156,14 @@ TextFormField buildShotDtForm(AddBookModel model, Picture picture) {
     controller: shotDtEditController,
     onChanged: (text) {
       model.bookTitle = text;
+    },
+    onTap: () async {
+      var date = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2100));
+      shotDtEditController.text = date.toString().substring(0, 10);
     },
     decoration: InputDecoration(
       filled: true,
@@ -168,7 +180,10 @@ TextFormField buildShotDtForm(AddBookModel model, Picture picture) {
   );
 }
 
-TextFormField buildCommentForm(AddBookModel model, Picture picture) {
+TextFormField buildCommentForm(
+  AddBookModel model,
+  Picture picture,
+) {
   final commentEditController = TextEditingController();
   if (picture != null) {
     commentEditController.text = picture.comment;
@@ -180,6 +195,7 @@ TextFormField buildCommentForm(AddBookModel model, Picture picture) {
     inputFormatters: [
       LengthLimitingTextInputFormatter(30),
     ],
+    textInputAction: TextInputAction.done,
     validator: (val) {
       if (val.isEmpty) {
         return '写真のコメントを入力してください';

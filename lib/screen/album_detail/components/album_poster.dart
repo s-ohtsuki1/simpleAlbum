@@ -1,4 +1,4 @@
-import 'package:favorite/entity/picture.dart';
+import 'package:favorite/model/picture.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';

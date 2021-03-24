@@ -1,6 +1,6 @@
 import 'package:favorite/constants.dart';
-import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/model/sign_in/sign_in_model.dart';
+import 'package:favorite/viewmodel/album_list/album_list_model.dart';
+import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

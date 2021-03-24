@@ -1,8 +1,8 @@
 import 'package:favorite/components/side_menu/side_menu.dart';
 import 'package:favorite/constants.dart';
-import 'package:favorite/model/album_detail/album_detail_model.dart';
-import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/model/sign_in/sign_in_model.dart';
+import 'package:favorite/viewmodel/album_detail/album_detail_model.dart';
+import 'package:favorite/viewmodel/album_list/album_list_model.dart';
+import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
 import 'package:favorite/screen/album_list/components/body.dart';
 import 'package:favorite/size_config.dart';

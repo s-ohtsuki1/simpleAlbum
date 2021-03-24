@@ -1,33 +1,21 @@
-import 'package:favorite/domain/book.dart';
+import 'package:favorite/model/picture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_book_model.dart';
 
-class AddBookPage extends StatefulWidget {
-  AddBookPage({this.book});
-  final Book book;
-
-  @override
-  AddBookPageState createState() {
-    return AddBookPageState(book: book);
-  }
-}
-
-class AddBookPageState extends State<AddBookPage> {
-  // formのグローバルキーを生成
+class AddBookPage extends StatelessWidget {
+  AddBookPage({Key key, this.picture}) : super(key: key);
+  final Picture picture;
   final _formKey = GlobalKey<FormState>();
-
-  AddBookPageState({this.book});
-  Book book;
 
   @override
   Widget build(BuildContext context) {
-    final bool isUpdate = book != null;
+    final bool isUpdate = picture != null;
     final textEditController = TextEditingController();
 
     if (isUpdate) {
-      textEditController.text = book.title;
+      textEditController.text = picture.title;
     }
     return ChangeNotifierProvider<AddBookModel>(
       create: (_) => AddBookModel(),
@@ -39,7 +27,7 @@ class AddBookPageState extends State<AddBookPage> {
             ),
             body: Consumer<AddBookModel>(builder: (context, model, child) {
               if (isUpdate) {
-                model.imageUrl = book.imageUrl;
+                model.imageUrl = picture.imageUrl;
               }
               return Form(
                 key: _formKey,
@@ -57,7 +45,7 @@ class AddBookPageState extends State<AddBookPage> {
                           child: model.imageFile != null
                               ? Image.file(model.imageFile)
                               : isUpdate
-                                  ? Image.network(book.imageUrl)
+                                  ? Image.network(picture.imageUrl)
                                   : Container(
                                       color: Colors.grey,
                                     ),
@@ -86,7 +74,7 @@ class AddBookPageState extends State<AddBookPage> {
 
                             // Firestoreに追加
                             if (isUpdate) {
-                              await model.updateBook(book);
+                              await model.updateBook(picture);
                             } else {
                               await model.addBook();
                             }
@@ -106,7 +94,7 @@ class AddBookPageState extends State<AddBookPage> {
           // ローディングアニメーション
           Consumer<AddBookModel>(
             builder: (context, model, child) {
-              bool r = model.isUploading;
+              // bool r = model.isUploading;
               return model.isUploading
                   ? Container(
                       color: Colors.grey.withOpacity(0.7),

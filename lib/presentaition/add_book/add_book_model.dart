@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite/domain/book.dart';
+import 'package:favorite/model/picture.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,11 +36,15 @@ class AddBookModel extends ChangeNotifier {
 
   // 本を追加
   Future addBook() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
     imageUrl = await _uploadBookImage();
 
-    await Firestore.instance.collection('books').add(
+    await Firestore.instance.collection('albums/' + user.uid + '/album').add(
       {
         'title': bookTitle,
+        'categoryId': 2,
+        'coment': "テストコメント",
         'imageUrl': imageUrl,
         'createdAt': Timestamp.now(),
       },
@@ -47,7 +52,7 @@ class AddBookModel extends ChangeNotifier {
   }
 
   // 本を編集
-  Future updateBook(Book book) async {
+  Future updateBook(Picture book) async {
     final document =
         Firestore.instance.collection('books').document(book.documentId);
 

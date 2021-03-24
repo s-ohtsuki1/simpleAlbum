@@ -1,4 +1,4 @@
-import 'package:favorite/model/sign_in/sign_in_model.dart';
+import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:favorite/screen/sign_in/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 

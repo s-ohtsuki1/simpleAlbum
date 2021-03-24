@@ -1,4 +1,4 @@
-import 'package:favorite/model/album_list/album_list_model.dart';
+import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
