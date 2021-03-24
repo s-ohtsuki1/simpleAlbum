@@ -1,7 +1,6 @@
 import 'package:favorite/entity/picture.dart';
 import 'package:favorite/model/album_detail/album_detail_model.dart';
 import 'package:favorite/model/album_list/album_list_model.dart';
-import 'package:favorite/presentaition/add_book/add_book_page.dart';
 import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +9,6 @@ import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import 'album_poster.dart';
-import 'back_and_favorite_row.dart';
 
 class Body extends StatelessWidget {
   final Picture picture;
@@ -59,6 +57,21 @@ class Body extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
+                    Container(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          size: 42,
+                          color: favoriteModel.isFavorite != null &&
+                                  favoriteModel.isFavorite
+                              ? Colors.pink
+                              : Colors.grey,
+                        ),
+                        onPressed: () {
+                          favoriteModel.changeFavorite();
+                        },
+                      ),
+                    ),
                     Container(
                       height: 56,
                       width: 56,
@@ -139,8 +152,39 @@ class Body extends StatelessWidget {
         ),
         Spacer(),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: GestureDetector(
+                onTap: () async {
+                  await favoriteModel.saveFavorite(
+                    picture.documentId,
+                    picture.preIsFavorite,
+                  );
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_back_rounded,
+                        color: Colors.lightBlue,
+                        size: 36,
+                      ),
+                      Text(
+                        "戻る",
+                        style: TextStyle(
+                          color: Colors.lightBlue,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Text(
               "撮影日: " +
                   DateFormat('yyyy/MM/dd')
@@ -153,8 +197,6 @@ class Body extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 5),
-        BackAndFavoriteRow(favoriteModel: favoriteModel, picture: picture),
       ],
     );
   }
