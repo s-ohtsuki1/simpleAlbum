@@ -1,5 +1,5 @@
 name: favorite
-description: お気に入りの本登録アプリ
+description: シンプルなアルバムアプリ
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -21,6 +21,8 @@ dependencies:
   google_sign_in: ^4.5.9
   flutter_svg: ^0.18.0
   intl: ^0.16.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
