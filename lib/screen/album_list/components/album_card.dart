@@ -1,8 +1,8 @@
 import 'package:favorite/model/picture.dart';
+import 'package:favorite/util/date_util.dart';
 import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
@@ -110,9 +110,7 @@ class AlbumCard extends StatelessWidget {
                                       width: 18,
                                     ),
                                     Text(
-                                      DateFormat('yyyy/MM/dd')
-                                          .format(picture.shotDate.toDate())
-                                          .toString(),
+                                      dateFormat(picture.shotDate.toDate()),
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:favorite/model/picture.dart';
+import 'package:favorite/util/date_util.dart';
 import 'package:favorite/viewmodel/album_detail/album_detail_model.dart';
 import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
@@ -178,10 +179,7 @@ class Body extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: Text(
-                "撮影日: " +
-                    DateFormat('yyyy/MM/dd')
-                        .format(picture.createdAt.toDate())
-                        .toString(),
+                "撮影日: " + dateFormat(picture.shotDate.toDate()),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
