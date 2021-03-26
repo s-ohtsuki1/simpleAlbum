@@ -23,7 +23,7 @@ class TopMenuBar extends StatelessWidget {
             ),
           ),
           Text(
-            "Shimple Album",
+            "Simple Album",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,

@@ -28,11 +28,10 @@ class AlbumListScreen extends StatelessWidget {
       ],
       child: WillPopScope(
         onWillPop: () async {
-          return true;
+          return false;
         },
         child: Scaffold(
           backgroundColor: kPrimaryColor,
-          // appBar: buildAlbumAppBar(),
           body: Consumer<AlbumListModel>(
             builder: (context, model, child) {
               return Stack(

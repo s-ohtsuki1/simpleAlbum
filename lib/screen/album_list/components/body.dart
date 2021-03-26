@@ -16,10 +16,6 @@ class Body extends StatelessWidget {
     AlbumDetailModel detailModel =
         Provider.of<AlbumDetailModel>(context, listen: false);
     return Material(
-      borderRadius: listModel.isSideMenuOpen
-          ? BorderRadius.all(Radius.circular(40))
-          : BorderRadius.all(Radius.circular(0)),
-      elevation: 8,
       color: kPrimaryColor,
       child: SafeArea(
         child: Container(
