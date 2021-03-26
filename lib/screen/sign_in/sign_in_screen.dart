@@ -19,12 +19,14 @@ class SignInScreen extends StatelessWidget {
         },
         child: WillPopScope(
           onWillPop: () async {
-            return true;
+            return false;
           },
           child: Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               title: appBarTextStyle("ログイン"),
               shape: appBarShape(),
+              automaticallyImplyLeading: false,
             ),
             resizeToAvoidBottomInset: false,
             body: Consumer<SignInModel>(builder: (context, model, child) {
