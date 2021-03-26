@@ -1,6 +1,7 @@
 import 'package:favorite/components/default_button.dart';
 import 'package:favorite/model/picture.dart';
-import 'package:favorite/presentaition/add_book/add_book_model.dart';
+import 'package:favorite/util/date_util.dart';
+import 'package:favorite/viewmodel/add_or_edit/add_or_edit_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class Body extends StatelessWidget {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final bool isUpdate = picture != null;
 
-    return Consumer<AddBookModel>(builder: (context, model, child) {
+    return Consumer<AddOrEditModel>(builder: (context, model, child) {
       if (isUpdate) {
         model.imageUrl = picture.imageUrl;
       }
@@ -104,7 +105,7 @@ class Body extends StatelessWidget {
     });
   }
 
-  TextFormField buildTitleForm(AddBookModel model, Picture picture) {
+  TextFormField buildTitleForm(AddOrEditModel model, Picture picture) {
     final titleEditController = TextEditingController();
     if (picture != null) {
       titleEditController.text = picture.title;
@@ -137,12 +138,10 @@ class Body extends StatelessWidget {
   }
 }
 
-TextFormField buildShotDtForm(AddBookModel model, Picture picture, context) {
+TextFormField buildShotDtForm(AddOrEditModel model, Picture picture, context) {
   final shotDtEditController = TextEditingController();
   if (picture != null) {
-    shotDtEditController.text =
-        DateFormat('yyyy/MM/dd').format(picture.createdAt.toDate()).toString();
-    ;
+    shotDtEditController.text = dateFormat(picture.shotDate.toDate());
   }
 
   return TextFormField(
@@ -155,15 +154,11 @@ TextFormField buildShotDtForm(AddBookModel model, Picture picture, context) {
     },
     controller: shotDtEditController,
     onChanged: (text) {
-      model.bookTitle = text;
+      model.shotDate = text;
     },
     onTap: () async {
-      var date = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2100));
-      shotDtEditController.text = date.toString().substring(0, 10);
+      shotDtEditController.text =
+          await model.selectShotDate(context, shotDtEditController.text);
     },
     decoration: InputDecoration(
       filled: true,
@@ -181,7 +176,7 @@ TextFormField buildShotDtForm(AddBookModel model, Picture picture, context) {
 }
 
 TextFormField buildCommentForm(
-  AddBookModel model,
+  AddOrEditModel model,
   Picture picture,
 ) {
   final commentEditController = TextEditingController();

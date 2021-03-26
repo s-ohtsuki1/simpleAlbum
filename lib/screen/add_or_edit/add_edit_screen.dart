@@ -1,5 +1,5 @@
 import 'package:favorite/model/picture.dart';
-import 'package:favorite/presentaition/add_book/add_book_model.dart';
+import 'package:favorite/viewmodel/add_or_edit/add_or_edit_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,28 +18,23 @@ class AddEditScreen extends StatelessWidget {
     if (isUpdate) {
       textEditController.text = picture.title;
     }
-    return ChangeNotifierProvider<AddBookModel>(
-      create: (_) => AddBookModel(),
+    return ChangeNotifierProvider<AddOrEditModel>(
+      create: (_) => AddOrEditModel(),
       child: Stack(
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text(isUpdate ? '写真を編集' : '写真を追加'),
-            ),
-            body: GestureDetector(
-              onTap: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-              },
-              child: Body(
-                picture: picture,
+              centerTitle: true,
+              title: Text(
+                isUpdate ? '写真を編集' : '写真を追加',
               ),
+            ),
+            body: Body(
+              picture: picture,
             ),
           ),
           // ローディングアニメーション
-          Consumer<AddBookModel>(
+          Consumer<AddOrEditModel>(
             builder: (context, model, child) {
               // bool r = model.isUploading;
               return model.isUploading
