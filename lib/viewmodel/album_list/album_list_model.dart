@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite/model/picture.dart';
+import 'package:favorite/viewmodel/user_state_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,10 @@ class AlbumListModel extends ChangeNotifier {
   int selectAlbumNo = 0;
   bool isLoading = false;
   bool isSideMenuOpen = false;
+
+  init() {
+    isSideMenuOpen = false;
+  }
 
   startLoading() {
     isLoading = true;
@@ -31,17 +36,17 @@ class AlbumListModel extends ChangeNotifier {
 
   // 最新写真一覧取得
   void getNewPicture() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    User currentUser = UserState.user;
 
     // 最新10件分取得
-    final snapshots = Firestore.instance
-        .collection('albums/' + user.uid + '/album')
+    final snapshots = FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/album')
         .orderBy('shotDate', descending: true)
         .limit(10)
         .snapshots();
     snapshots.listen(
       (snapshot) {
-        final pictures = snapshot.documents.map((doc) => Picture(doc)).toList();
+        final pictures = snapshot.docs.map((doc) => Picture(doc)).toList();
         this.pictures = pictures;
         notifyListeners();
       },
@@ -50,27 +55,29 @@ class AlbumListModel extends ChangeNotifier {
 
   // アルバムNOで写真一覧取得
   void getAlbumNoPicture() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    User currentUser = UserState.user;
 
-    final snapshots = Firestore.instance
-        .collection('albums/' + user.uid + '/album')
+    final snapshots = FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/album')
         .where('albumNo', isEqualTo: selectAlbumNo)
         .orderBy('shotDate', descending: true)
         .snapshots();
     snapshots.listen(
       (snapshot) {
-        final pictures = snapshot.documents.map((doc) => Picture(doc)).toList();
+        final pictures = snapshot.docs.map((doc) => Picture(doc)).toList();
         this.pictures = pictures;
         notifyListeners();
       },
     );
   }
 
-  // 本の削除
-  Future deleteBook(Picture book) async {
-    await Firestore.instance
-        .collection('books')
-        .document(book.documentId)
+  // 写真の削除
+  Future deleteBook(Picture picture) async {
+    User currentUser = UserState.user;
+
+    await FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/album')
+        .doc(picture.documentId)
         .delete();
   }
 

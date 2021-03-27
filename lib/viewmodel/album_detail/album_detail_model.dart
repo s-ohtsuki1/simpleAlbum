@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite/model/favorite.dart';
+import 'package:favorite/viewmodel/user_state_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AlbumDetailModel extends ChangeNotifier {
   List<Favorite> favorit = [];
   String favoriteId;
-  FirebaseUser user;
+  User currentUser;
   bool isFavorite;
 
   changeFavorite() {
@@ -21,13 +22,14 @@ class AlbumDetailModel extends ChangeNotifier {
   // お気に入り情報取得
   Future fetchFavorite(String picDocumentId) async {
     this.favorit = [];
-    user = await FirebaseAuth.instance.currentUser();
-    final docs = await Firestore.instance
-        .collection('albums/' + user.uid + '/favorite')
+
+    currentUser = UserState.user;
+    final docs = await FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/favorite')
         .where("picDocumentId", isEqualTo: picDocumentId)
         .limit(1)
-        .getDocuments();
-    this.favorit = docs.documents.map((doc) => Favorite(doc)).toList();
+        .get();
+    this.favorit = docs.docs.map((doc) => Favorite(doc)).toList();
     if (favorit.length == 1) {
       isFavorite = true;
       favoriteId = this.favorit.first.documentId;
@@ -40,10 +42,10 @@ class AlbumDetailModel extends ChangeNotifier {
   // お気に入り追加/解除（削除）
   Future saveFavorite(String picDocumentId, bool preIsFavorite) async {
     if (!preIsFavorite && isFavorite) {
-      user = await FirebaseAuth.instance.currentUser();
+      currentUser = UserState.user;
 
-      await Firestore.instance
-          .collection('albums/' + user.uid + '/favorite')
+      await FirebaseFirestore.instance
+          .collection('albums/' + currentUser.uid + '/favorite')
           .add(
         {
           'picDocumentId': picDocumentId,
@@ -52,9 +54,9 @@ class AlbumDetailModel extends ChangeNotifier {
       );
     }
     if (preIsFavorite && !isFavorite) {
-      await Firestore.instance
-          .collection('albums/' + user.uid + '/favorite')
-          .document(favoriteId)
+      await FirebaseFirestore.instance
+          .collection('albums/' + currentUser.uid + '/favorite')
+          .doc(favoriteId)
           .delete();
     }
     notifyListeners();

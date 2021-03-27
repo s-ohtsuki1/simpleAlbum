@@ -10,9 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../user_state_model.dart';
+
 class AddOrEditModel extends ChangeNotifier {
-  String bookTitle = '';
-  int albumNo = 0;
+  String title = '';
+  int albumNo = 2;
   String shotDate = '';
   String comment = '';
   String imageUrl = '';
@@ -87,54 +89,71 @@ class AddOrEditModel extends ChangeNotifier {
   }
 
   // 写真を追加
-  Future addBook() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  Future addPicture() async {
+    User currentUser = UserState.user;
 
-    imageUrl = await _uploadBookImage();
+    imageUrl = await _uploadPictureImage();
 
-    await Firestore.instance.collection('albums/' + user.uid + '/album').add(
+    await FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/album')
+        .add(
       {
-        'title': bookTitle,
-        'categoryId': albumNo,
-        'shotDate': shotDate,
-        'coment': comment,
+        'title': title,
+        'albumNo': albumNo,
+        'shotDate': DateFormat("yyyy/MM/dd").parseStrict(shotDate),
+        'comment': comment,
         'imageUrl': imageUrl,
         'createdAt': Timestamp.now(),
       },
     );
   }
 
-  // 本を編集
-  Future updateBook(Picture book) async {
-    final document =
-        Firestore.instance.collection('books').document(book.documentId);
+  // 写真を編集
+  Future updatePicture(Picture picture) async {
+    User currentUser = UserState.user;
 
-    imageUrl = await _uploadBookImage();
+    final document = FirebaseFirestore.instance
+        .collection('albums/' + currentUser.uid + '/album')
+        .doc(picture.documentId);
 
-    await document.updateData(
+    imageUrl = await _uploadPictureImage();
+
+    await document.update(
       {
-        'title': bookTitle,
+        'title': title,
+        'albumNo': albumNo,
+        'shotDate': DateFormat("yyyy/MM/dd").parseStrict(shotDate),
+        'comment': comment,
         'imageUrl': imageUrl,
         'updatedAt': Timestamp.now(),
       },
     );
   }
 
-  // 本の画像をアップロード
-  Future<String> _uploadBookImage() async {
-    // 画像の変更があった場合
+  // 写真をアップロード
+  Future<String> _uploadPictureImage() async {
+    // 写真の変更があった場合
     if (imageFile != null) {
       final storage = FirebaseStorage.instance;
 
-      StorageTaskSnapshot snapshot = await storage
+      TaskSnapshot snapshot = await storage
           .ref()
-          .child('books/' + bookTitle)
+          .child('picture/' + title)
           .putFile(imageFile)
-          .onComplete;
+          .whenComplete(() => null);
 
       imageUrl = await snapshot.ref.getDownloadURL();
     }
 
     return imageUrl;
+  }
+
+  void initField() {
+    title = '';
+    albumNo = 2;
+    shotDate = '';
+    comment = '';
+    imageUrl = '';
+    imageFile = null;
   }
 }

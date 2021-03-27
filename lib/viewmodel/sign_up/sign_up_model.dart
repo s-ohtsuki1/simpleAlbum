@@ -33,7 +33,7 @@ class SignUpModel extends ChangeNotifier {
         .user;
 
     final email = user.email;
-    Firestore.instance.collection('users').add(
+    FirebaseFirestore.instance.collection('users').add(
       {
         'email': email,
         'created_at': Timestamp.now(),
