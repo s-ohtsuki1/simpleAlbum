@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Picture {
   Picture(DocumentSnapshot doc) {
-    documentId = doc.documentID;
+    documentId = doc.id;
     title = doc['title'];
     comment = doc['comment'];
     albumNo = doc['albumNo'];
