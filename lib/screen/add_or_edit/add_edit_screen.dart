@@ -8,18 +8,23 @@ import 'components/body.dart';
 class AddEditScreen extends StatelessWidget {
   AddEditScreen({Key key, this.picture}) : super(key: key);
   final Picture picture;
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    AddOrEditModel addOrEditModel =
+        Provider.of<AddOrEditModel>(context, listen: false);
     final bool isUpdate = picture != null;
-    final textEditController = TextEditingController();
 
     if (isUpdate) {
-      textEditController.text = picture.title;
+      addOrEditModel.imageUrl = picture.imageUrl;
     }
-    return ChangeNotifierProvider<AddOrEditModel>(
-      create: (_) => AddOrEditModel(),
+
+    return WillPopScope(
+      onWillPop: () {
+        addOrEditModel.initField();
+        return Future.value(true);
+      },
       child: Stack(
         children: [
           Scaffold(
@@ -34,22 +39,16 @@ class AddEditScreen extends StatelessWidget {
             ),
           ),
           // ローディングアニメーション
-          Consumer<AddOrEditModel>(
-            builder: (context, model, child) {
-              // bool r = model.isUploading;
-              return model.isUploading
-                  ? Container(
-                      color: Colors.grey.withOpacity(0.7),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.indigo),
-                        ),
-                      ),
-                    )
-                  : SizedBox();
-            },
-          ),
+          addOrEditModel.isUploading
+              ? Container(
+                  color: Colors.grey.withOpacity(0.7),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );

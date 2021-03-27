@@ -1,15 +1,14 @@
 import 'package:favorite/model/picture.dart';
-import 'package:favorite/util/date_util.dart';
 import 'package:favorite/viewmodel/album_detail/album_detail_model.dart';
 import 'package:favorite/viewmodel/album_list/album_list_model.dart';
-import 'package:favorite/screen/add_or_edit/add_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import 'album_poster.dart';
+import 'back_and_shotdt_row.dart';
+import 'favorite_and_edit_row.dart';
 
 class Body extends StatelessWidget {
   final Picture picture;
@@ -37,78 +36,10 @@ class Body extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding * 1.5,
-                        vertical: kDefaultPadding / 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: listModel.setCategoryColor(picture.albumNo),
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                      child: Text(
-                        "アルバム" + picture.albumNo.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.favorite,
-                          size: 42,
-                          color: favoriteModel.isFavorite != null &&
-                                  favoriteModel.isFavorite
-                              ? Colors.pink
-                              : Colors.grey,
-                        ),
-                        onPressed: () {
-                          favoriteModel.changeFavorite();
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        color: Colors.yellow[100],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: kSecondaryColor,
-                          size: 36,
-                        ),
-                        // 編集画面へ
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AddEditScreen(picture: picture),
-                            ),
-                          );
-                          // if (doneMessage != '' && doneMessage != null) {
-                          //   Scaffold.of(context).showSnackBar(SnackBar(
-                          //     content: Text(doneMessage),
-                          //     backgroundColor: Colors.lightGreen,
-                          //   ));
-                          // }
-                          // await model.fetchBooks();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                child: FavoriteAndEditRow(
+                    listModel: listModel,
+                    picture: picture,
+                    favoriteModel: favoriteModel),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -152,42 +83,7 @@ class Body extends StatelessWidget {
           ],
         ),
         Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 5,
-              ),
-              child: GestureDetector(
-                onTap: () async {
-                  await favoriteModel.saveFavorite(
-                    picture.documentId,
-                    picture.preIsFavorite,
-                  );
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.lightBlue,
-                    size: 50,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: Text(
-                "撮影日: " + dateFormat(picture.shotDate.toDate()),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+        BackAndShotDtRow(favoriteModel: favoriteModel, picture: picture),
       ],
     );
   }

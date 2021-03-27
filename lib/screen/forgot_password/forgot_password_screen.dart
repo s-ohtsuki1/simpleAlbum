@@ -8,24 +8,21 @@ class ForgotPasswordScreen extends StatelessWidget {
   static String routeName = "/forgot_password";
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ForgotPasswordModel>(
-      create: (_) => ForgotPasswordModel(),
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("パスワードを再設定"),
-            shape: appBarShape(),
-          ),
-          body: Consumer<ForgotPasswordModel>(builder: (context, model, child) {
-            return Body();
-          }),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("パスワードを再設定"),
+          shape: appBarShape(),
         ),
+        body: Consumer<ForgotPasswordModel>(builder: (context, model, child) {
+          return Body();
+        }),
       ),
     );
   }

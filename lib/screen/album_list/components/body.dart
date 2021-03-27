@@ -12,9 +12,10 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AlbumListModel listModel =
-        Provider.of<AlbumListModel>(context, listen: false);
+        Provider.of<AlbumListModel>(context, listen: true);
     AlbumDetailModel detailModel =
-        Provider.of<AlbumDetailModel>(context, listen: false);
+        Provider.of<AlbumDetailModel>(context, listen: true);
+
     return Material(
       color: kPrimaryColor,
       child: SafeArea(

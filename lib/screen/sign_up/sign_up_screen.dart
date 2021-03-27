@@ -10,25 +10,22 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return ChangeNotifierProvider<SignUpModel>(
-      create: (_) => SignUpModel(),
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: appBarTextStyle("新規登録"),
-            shape: appBarShape(),
-          ),
-          resizeToAvoidBottomInset: false,
-          body: Consumer<SignUpModel>(builder: (context, model, child) {
-            return Body();
-          }),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: appBarTextStyle("新規登録"),
+          shape: appBarShape(),
         ),
+        resizeToAvoidBottomInset: false,
+        body: Consumer<SignUpModel>(builder: (context, model, child) {
+          return Body();
+        }),
       ),
     );
   }

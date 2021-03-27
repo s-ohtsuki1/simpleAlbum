@@ -9,7 +9,7 @@ class LoginSuccessScreen extends StatelessWidget {
     SizeConfig().init(context);
     return WillPopScope(
         onWillPop: () async {
-          return true;
+          return false;
         },
         child: Scaffold(body: Body()));
   }
