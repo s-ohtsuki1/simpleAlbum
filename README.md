@@ -32,7 +32,7 @@
 
 # Installation
 
-Flutter instal
+Flutter install
 
 <a href="https://flutter.dev/docs/get-started/install" ><img width="200" src="https://user-images.githubusercontent.com/54879822/112728130-08fbf480-8f69-11eb-97b1-e0c9a43035f6.png" /></a>
 <p style="height: 10px"></p>
