@@ -37,13 +37,13 @@ Flutter instal
 <a href="https://flutter.dev/docs/get-started/install" ><img width="200" src="https://user-images.githubusercontent.com/54879822/112728130-08fbf480-8f69-11eb-97b1-e0c9a43035f6.png" /></a>
 <p style="height: 10px"></p>
 
-Firebase SetUp
+Firebase setup
 
 <a href="https://firebase.google.com/docs/flutter/setup?hl=ja" ><img width="200" height="" src="https://user-images.githubusercontent.com/54879822/112728332-0b128300-8f6a-11eb-9772-a0c323869e09.png" /></a>
 <p style="height: 10px"></p>
 
 
-install Library
+Install library
 
 ```bash
 flutter pub get
