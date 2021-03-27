@@ -27,7 +27,6 @@
 
 # Installation
 
-Requirementで列挙したライブラリなどのインストール方法を説明する
 
 ```bash
 flutter pub get
