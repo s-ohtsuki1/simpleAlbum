@@ -1,24 +1,27 @@
 import 'package:favorite/screen/album_list/album_list_screen.dart';
 import 'package:favorite/screen/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'providers.dart';
 import 'theme.dart';
+import 'viewmodel/album_list/album_list_model.dart';
 import 'viewmodel/user_state_model.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final UserStateModel user = UserStateModel();
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserStateModel>.value(
-      value: user,
+    return MultiProvider(
+      providers: Providers().useProviders,
       child: MaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
@@ -46,22 +49,23 @@ class LoginCheck extends StatefulWidget {
 }
 
 class _LoginCheckState extends State<LoginCheck> {
-  //ログイン状態のチェック(非同期で行う)
-  void checkUser() async {
-    final currentUser = await FirebaseAuth.instance.currentUser();
-    final userState = Provider.of<UserStateModel>(context, listen: false);
-    if (currentUser == null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SplashScreen()),
-      );
-    } else {
-      userState.setUser(currentUser);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AlbumListScreen()),
-      );
-    }
+  void checkUser() {
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if (user != null) {
+        UserState().setUser(user);
+        Provider.of<AlbumListModel>(context, listen: false).getNewPicture();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AlbumListScreen()),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SplashScreen()),
+        );
+      }
+    });
   }
 
   @override
