@@ -1,5 +1,4 @@
 import 'package:favorite/constants.dart';
-import 'package:favorite/screen/forgot_password/forgot_password_screen.dart';
 import 'package:favorite/screen/sign_up/sign_up_screen.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';

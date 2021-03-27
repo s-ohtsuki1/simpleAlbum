@@ -13,8 +13,8 @@ class SideManu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AlbumListModel listModel =
-        Provider.of<AlbumListModel>(context, listen: false);
-    SignInModel signInModel = Provider.of<SignInModel>(context, listen: false);
+        Provider.of<AlbumListModel>(context, listen: true);
+    SignInModel signInModel = Provider.of<SignInModel>(context, listen: true);
 
     return AnimatedPositioned(
       duration: duration,
