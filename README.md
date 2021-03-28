@@ -42,6 +42,12 @@ Firebase setup
 <a href="https://firebase.google.com/docs/flutter/setup?hl=ja" ><img width="200" height="" src="https://user-images.githubusercontent.com/54879822/112728332-0b128300-8f6a-11eb-9772-a0c323869e09.png" /></a>
 <p style="height: 10px"></p>
 
+Install library
+
+```bash
+flutter pub get
+```
+<p style="height: 10px"></p>
 
 Install library
 
