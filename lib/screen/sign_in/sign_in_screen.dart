@@ -1,8 +1,6 @@
 import 'package:favorite/screen/sign_in/components/body.dart';
 import 'package:favorite/theme.dart';
-import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = '/sign_in';
@@ -20,17 +18,14 @@ class SignInScreen extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: appBarTextStyle("ログイン"),
-            shape: appBarShape(),
-            automaticallyImplyLeading: false,
-          ),
-          resizeToAvoidBottomInset: false,
-          body: Consumer<SignInModel>(builder: (context, model, child) {
-            return Body();
-          }),
-        ),
+            appBar: AppBar(
+              centerTitle: true,
+              title: appBarTextStyle("ログイン"),
+              shape: appBarShape(),
+              automaticallyImplyLeading: false,
+            ),
+            resizeToAvoidBottomInset: false,
+            body: Body()),
       ),
     );
   }

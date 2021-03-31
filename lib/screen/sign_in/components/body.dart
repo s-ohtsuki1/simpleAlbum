@@ -1,13 +1,16 @@
 import 'package:favorite/components/no_account_text.dart';
 import 'package:favorite/components/socal_card.dart';
 import 'package:favorite/size_config.dart';
+import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'sign_form.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SignInModel signInModel = Provider.of<SignInModel>(context, listen: false);
     final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     return SingleChildScrollView(
       reverse: true,
@@ -36,7 +39,9 @@ class Body extends StatelessWidget {
                     children: [
                       SocalCard(
                         icon: 'assets/icons/google-icon.svg',
-                        press: () {},
+                        press: () {
+                          signInModel.googleLogin();
+                        },
                       ),
                       SocalCard(
                         icon: "assets/icons/facebook-2.svg",
