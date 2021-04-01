@@ -16,14 +16,11 @@ class ForgotPasswordScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("パスワードを再設定"),
-          shape: appBarShape(),
-        ),
-        body: Consumer<ForgotPasswordModel>(builder: (context, model, child) {
-          return Body();
-        }),
-      ),
+          appBar: AppBar(
+            title: Text("パスワードを再設定"),
+            shape: appBarShape(),
+          ),
+          body: Body()),
     );
   }
 }

@@ -38,19 +38,19 @@ class Body extends StatelessWidget {
   }
 }
 
-class ForgotPassForm extends StatefulWidget {
-  @override
-  _ForgotPassFormState createState() => _ForgotPassFormState();
-}
+// class ForgotPassForm extends StatefulWidget {
+//   @override
+//   _ForgotPassFormState createState() => _ForgotPassFormState();
+// }
 
-class _ForgotPassFormState extends State<ForgotPassForm> {
+class ForgotPassForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
-    final mailContlloer =
-        Provider.of<ForgotPasswordModel>(context, listen: false)
-            .mailEditController;
+    ForgotPasswordModel model =
+        Provider.of<ForgotPasswordModel>(context, listen: false);
+    final mailContlloer = model.mailEditController;
     return Form(
       key: _formKey,
       child: Column(
@@ -60,30 +60,30 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             controller: mailContlloer,
             onChanged: (value) {
               if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.remove(kEmailNullError);
-                });
+                // setState(() {
+                //   errors.remove(kEmailNullError);
+                // });
               } else if (emailValidatorRegExp.hasMatch(value) &&
                   errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.remove(kInvalidEmailError);
-                });
+                // setState(() {
+                //   errors.remove(kInvalidEmailError);
+                // });
               }
-              Provider.of<ForgotPasswordModel>(context, listen: false).mail =
-                  value;
+              // Provider.of<ForgotPasswordModel>(context, listen: false).mail =
+              //     value;
               return null;
             },
             validator: (value) {
               if (value!.isEmpty && !errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.add(kEmailNullError);
-                });
+                // setState(() {
+                //   errors.add(kEmailNullError);
+                // });
               } else if (value.isNotEmpty &&
                   !emailValidatorRegExp.hasMatch(value) &&
                   !errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.add(kInvalidEmailError);
-                });
+                // setState(() {
+                //   errors.add(kInvalidEmailError);
+                // });
               }
               return null;
             },
@@ -112,13 +112,17 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "送信",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 if (errors.isEmpty) {
                   try {
-                    // TODO パスワード再設定メール送信
-                    // await model.login();
+                    model.email = mailContlloer.text;
+
+                    String res = await model.sendPasswordResetEmail();
+                    if (res == model.INVALID_EMAIL) {
+                    } else if (res == model.USER_NOT_FOUND) {
+                    } else if (res == model.SUCCESS) {}
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) => BookListPage()),

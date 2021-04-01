@@ -29,9 +29,10 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: [
-          const Locale('en'),
-          const Locale('ja'),
+          const Locale('en', ''),
+          const Locale('ja', ''),
         ],
+        locale: Locale('ja', 'JP'),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: theme(),

@@ -10,12 +10,12 @@ class SocalCard extends StatelessWidget {
   });
 
   final String icon;
-  final Function press;
+  final void Function() press;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => press,
+      onTap: press,
       child: Container(
         margin:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),

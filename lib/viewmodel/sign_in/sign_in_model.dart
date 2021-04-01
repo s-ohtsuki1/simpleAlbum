@@ -44,13 +44,13 @@ class SignInModel extends ChangeNotifier {
     GoogleSignInAccount? signinAccount = await googleSignin.signIn();
     if (signinAccount == null) return;
 
-    GoogleSignInAccount? _currentUser;
-    googleSignin.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      _currentUser = account;
-      // if (_currentUser != null) {
-      //   _handleGetContact(_currentUser!);
-      // }
-    });
+    // GoogleSignInAccount? _currentUser;
+    // googleSignin.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+    //   _currentUser = account;
+    //   // if (_currentUser != null) {
+    //   //   _handleGetContact(_currentUser!);
+    //   // }
+    // });
     GoogleSignInAuthentication auth = await signinAccount.authentication;
     final credential = GoogleAuthProvider.credential(
       idToken: auth.idToken,
