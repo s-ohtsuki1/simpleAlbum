@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 
 class AlbumDetailModel extends ChangeNotifier {
   List<Favorite> favorit = [];
-  String favoriteId;
-  User currentUser;
-  bool isFavorite;
+  String favoriteId = '';
+  bool isFavorite = false;
 
   changeFavorite() {
     if (isFavorite)
@@ -23,7 +22,7 @@ class AlbumDetailModel extends ChangeNotifier {
   Future fetchFavorite(String picDocumentId) async {
     this.favorit = [];
 
-    currentUser = UserState.user;
+    User currentUser = UserState.user;
     final docs = await FirebaseFirestore.instance
         .collection('albums/' + currentUser.uid + '/favorite')
         .where("picDocumentId", isEqualTo: picDocumentId)
@@ -41,9 +40,8 @@ class AlbumDetailModel extends ChangeNotifier {
 
   // お気に入り追加/解除（削除）
   Future saveFavorite(String picDocumentId, bool preIsFavorite) async {
+    User currentUser = UserState.user;
     if (!preIsFavorite && isFavorite) {
-      currentUser = UserState.user;
-
       await FirebaseFirestore.instance
           .collection('albums/' + currentUser.uid + '/favorite')
           .add(

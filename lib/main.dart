@@ -42,15 +42,13 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginCheck extends StatefulWidget {
-  LoginCheck({Key key}) : super(key: key);
-
   @override
   _LoginCheckState createState() => _LoginCheckState();
 }
 
 class _LoginCheckState extends State<LoginCheck> {
   void checkUser() {
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         UserState().setUser(user);
         Provider.of<AlbumListModel>(context, listen: false).getNewPicture();

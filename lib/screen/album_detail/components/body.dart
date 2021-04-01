@@ -2,6 +2,7 @@ import 'package:favorite/model/picture.dart';
 import 'package:favorite/viewmodel/album_detail/album_detail_model.dart';
 import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -11,12 +12,11 @@ import 'back_and_shotdt_row.dart';
 import 'favorite_and_edit_row.dart';
 
 class Body extends StatelessWidget {
-  final Picture picture;
-
   const Body({
-    Key key,
-    this.picture,
-  }) : super(key: key);
+    required this.picture,
+  });
+
+  final Picture picture;
   @override
   Widget build(BuildContext context) {
     AlbumListModel listModel =

@@ -82,7 +82,7 @@ class AlbumListModel extends ChangeNotifier {
   }
 
   // カテゴリーカラーをセット
-  Color setCategoryColor(int categoryId) {
+  Color? setCategoryColor(int categoryId) {
     switch (categoryId) {
       case 0:
         return Colors.red[600];

@@ -4,10 +4,6 @@ import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
 class NoAccountText extends StatelessWidget {
-  const NoAccountText({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(

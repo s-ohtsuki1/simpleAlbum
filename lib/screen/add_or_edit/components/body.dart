@@ -13,11 +13,10 @@ import 'picture_field.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key key,
     this.picture,
-  }) : super(key: key);
+  });
 
-  final Picture picture;
+  final Picture? picture;
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +58,11 @@ class Body extends StatelessWidget {
                   DefaultButton(
                     text: isUpdate ? '編集する' : '追加する',
                     press: () async {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         await addOrEditModel.startLoading();
 
                         if (isUpdate) {
-                          await addOrEditModel.updatePicture(picture);
+                          await addOrEditModel.updatePicture(picture!);
                         } else {
                           await addOrEditModel.addPicture();
                         }

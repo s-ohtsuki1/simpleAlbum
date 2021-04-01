@@ -7,10 +7,9 @@ import 'album_card.dart';
 
 class PictureList extends StatelessWidget {
   const PictureList({
-    Key key,
-    @required this.listModel,
-    @required this.detailModel,
-  }) : super(key: key);
+    required this.listModel,
+    required this.detailModel,
+  });
 
   final AlbumListModel listModel;
   final AlbumDetailModel detailModel;

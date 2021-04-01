@@ -75,8 +75,8 @@ class _SignFormState extends State<SignForm> {
             DefaultButton(
               text: "登録",
               press: () async {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
                   if (errors.isEmpty) {
                     try {
                       await model.signUp();
@@ -121,7 +121,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
+        if (value!.isEmpty && !errors.contains(kEmailNullError)) {
           setState(() {
             errors.add(kEmailNullError);
           });

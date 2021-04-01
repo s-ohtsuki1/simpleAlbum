@@ -74,7 +74,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               return null;
             },
             validator: (value) {
-              if (value.isEmpty && !errors.contains(kEmailNullError)) {
+              if (value!.isEmpty && !errors.contains(kEmailNullError)) {
                 setState(() {
                   errors.add(kEmailNullError);
                 });
@@ -113,8 +113,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             text: "送信",
             press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 if (errors.isEmpty) {
                   try {
                     // TODO パスワード再設定メール送信

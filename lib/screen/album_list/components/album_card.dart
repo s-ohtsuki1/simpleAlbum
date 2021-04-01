@@ -2,6 +2,7 @@ import 'package:favorite/model/picture.dart';
 import 'package:favorite/util/date_util.dart';
 import 'package:favorite/viewmodel/album_list/album_list_model.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -9,15 +10,14 @@ import '../../../constants.dart';
 
 class AlbumCard extends StatelessWidget {
   const AlbumCard({
-    Key key,
-    this.itemIndex,
-    this.picture,
-    this.press,
-  }) : super(key: key);
+    required this.itemIndex,
+    required this.picture,
+    required this.press,
+  });
 
   final int itemIndex;
   final Picture picture;
-  final Function press;
+  final void Function() press;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class AlbumCard extends StatelessWidget {
                     picture.imageUrl,
                     fit: BoxFit.cover,
                     loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
+                        ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Center(
                         child: CircularProgressIndicator(
@@ -74,7 +74,7 @@ class AlbumCard extends StatelessWidget {
                               AlwaysStoppedAnimation<Color>(kPrimaryColor),
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes!
                               : null,
                         ),
                       );

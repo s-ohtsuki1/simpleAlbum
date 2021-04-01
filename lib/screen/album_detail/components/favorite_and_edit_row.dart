@@ -8,11 +8,10 @@ import '../../../constants.dart';
 
 class FavoriteAndEditRow extends StatelessWidget {
   const FavoriteAndEditRow({
-    Key key,
-    @required this.listModel,
-    @required this.picture,
-    @required this.favoriteModel,
-  }) : super(key: key);
+    required this.listModel,
+    required this.picture,
+    required this.favoriteModel,
+  });
 
   final Picture picture;
   final AlbumListModel listModel;
@@ -46,10 +45,7 @@ class FavoriteAndEditRow extends StatelessWidget {
             icon: Icon(
               Icons.favorite,
               size: 42,
-              color:
-                  favoriteModel.isFavorite != null && favoriteModel.isFavorite
-                      ? Colors.pink
-                      : Colors.grey,
+              color: favoriteModel.isFavorite ? Colors.pink : Colors.grey,
             ),
             onPressed: () {
               favoriteModel.changeFavorite();

@@ -32,7 +32,7 @@ class SignUpModel extends ChangeNotifier {
     ))
         .user;
 
-    final email = user.email;
+    final email = user!.email;
     FirebaseFirestore.instance.collection('users').add(
       {
         'email': email,

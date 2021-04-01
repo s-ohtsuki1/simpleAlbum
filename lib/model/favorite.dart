@@ -6,6 +6,6 @@ class Favorite {
     picDocumentId = doc['picDocumentId'];
   }
 
-  String documentId;
-  String picDocumentId;
+  String documentId = '';
+  String picDocumentId = '';
 }

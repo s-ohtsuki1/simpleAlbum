@@ -49,8 +49,8 @@ class _SignFormState extends State<SignForm> {
             DefaultButton(
               text: "ログイン",
               press: () async {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
                   if (errors.isEmpty) {
                     try {
                       await model.login();
@@ -76,7 +76,7 @@ class _SignFormState extends State<SignForm> {
                   onChanged: (isCheck) {
                     setState(() {
                       Provider.of<SignInModel>(context, listen: false)
-                          .isRemember = isCheck;
+                          .isRemember = isCheck!;
                     });
                   },
                 ),
@@ -110,7 +110,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
+        if (value!.isEmpty && !errors.contains(kEmailNullError)) {
           setState(() {
             errors.add(kEmailNullError);
           });
@@ -163,7 +163,7 @@ class _SignFormState extends State<SignForm> {
         Provider.of<SignInModel>(context, listen: false).password = password;
       },
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kPassNullError)) {
+        if (value!.isEmpty && !errors.contains(kPassNullError)) {
           setState(() {
             errors.add(kPassNullError);
           });

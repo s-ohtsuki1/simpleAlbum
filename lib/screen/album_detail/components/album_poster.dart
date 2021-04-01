@@ -5,9 +5,8 @@ import '../../../size_config.dart';
 
 class AlbumPoster extends StatelessWidget {
   const AlbumPoster({
-    Key key,
-    this.picture,
-  }) : super(key: key);
+    required this.picture,
+  });
 
   final Picture picture;
 

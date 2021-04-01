@@ -58,8 +58,8 @@ class _BodyState extends State<Body> {
                     },
                     itemCount: splashData.length,
                     itemBuilder: (context, index) => SplashContent(
-                      image: splashData[index]["image"],
-                      text: splashData[index]["text"],
+                      image: splashData[index]["image"]!,
+                      text: splashData[index]["text"]!,
                     ),
                   )),
               Expanded(
@@ -80,7 +80,8 @@ class _BodyState extends State<Body> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignInScreen()),
+                            builder: (context) => SignInScreen(),
+                          ),
                         );
                       },
                     ),
@@ -95,7 +96,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  AnimatedContainer buildDot({int index}) {
+  AnimatedContainer buildDot({int? index}) {
     return AnimatedContainer(
       duration: kAnimationDuration,
       margin: EdgeInsets.only(right: 5),

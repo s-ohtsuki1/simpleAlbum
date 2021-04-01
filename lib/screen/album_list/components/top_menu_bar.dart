@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class TopMenuBar extends StatelessWidget {
-  final AlbumListModel model;
+  const TopMenuBar({required this.model});
 
-  const TopMenuBar({Key key, this.model}) : super(key: key);
+  final AlbumListModel model;
   @override
   Widget build(BuildContext context) {
     return Padding(

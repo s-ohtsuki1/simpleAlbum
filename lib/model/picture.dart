@@ -11,12 +11,12 @@ class Picture {
     createdAt = doc['createdAt'];
   }
 
-  String documentId;
-  String title;
-  String comment;
-  int albumNo;
-  String imageUrl;
-  Timestamp shotDate;
-  Timestamp createdAt;
+  String documentId = '';
+  String title = '';
+  String comment = '';
+  int albumNo = 1;
+  String imageUrl = '';
+  Timestamp shotDate = Timestamp.now();
+  Timestamp createdAt = Timestamp.now();
   bool preIsFavorite = false;
 }

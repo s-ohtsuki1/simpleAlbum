@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:favorite/model/picture.dart';
 import 'package:favorite/viewmodel/add_or_edit/add_or_edit_model.dart';
 import 'package:flutter/material.dart';
@@ -5,13 +7,12 @@ import 'package:provider/provider.dart';
 
 class PictureField extends StatelessWidget {
   const PictureField({
-    Key key,
-    @required this.isUpdate,
-    @required this.picture,
-  }) : super(key: key);
+    required this.isUpdate,
+    this.picture,
+  });
 
   final bool isUpdate;
-  final Picture picture;
+  final Picture? picture;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class PictureField extends StatelessWidget {
         Provider.of<AddOrEditModel>(context, listen: true);
 
     return Container(
-      child: addEditModel.imageFile != null
+      child: addEditModel.imageFile.path.isNotEmpty
           ? ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.file(
@@ -31,7 +32,7 @@ class PictureField extends StatelessWidget {
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    picture.imageUrl,
+                    picture!.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 )

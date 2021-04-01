@@ -8,16 +8,16 @@ import '../../../constants.dart';
 
 class AddEditTextFields {}
 
-TextFormField buildTitleForm(AddOrEditModel model, Picture picture) {
+TextFormField buildTitleForm(AddOrEditModel model, Picture? picture) {
   final titleEditController = TextEditingController();
   if (picture != null) {
     model.title = picture.title;
-    titleEditController.text = picture.title;
+    titleEditController.text = model.title;
   }
 
   return TextFormField(
     validator: (val) {
-      if (val.isEmpty) {
+      if (val!.isEmpty) {
         return '写真のタイトルを入力してください';
       }
       return null;
@@ -41,17 +41,18 @@ TextFormField buildTitleForm(AddOrEditModel model, Picture picture) {
   );
 }
 
-TextFormField buildShotDtForm(AddOrEditModel model, Picture picture, context) {
+TextFormField buildShotDtForm(AddOrEditModel model, Picture? picture, context) {
   final shotDtEditController = TextEditingController();
+
   if (picture != null) {
     model.shotDate = dateFormat(picture.shotDate.toDate());
-    shotDtEditController.text = dateFormat(picture.shotDate.toDate());
+    shotDtEditController.text = model.shotDate;
   }
 
   return TextFormField(
     readOnly: true,
     validator: (val) {
-      if (val.isEmpty) {
+      if (val!.isEmpty) {
         return '写真の撮影日を入力してください';
       }
       return null;
@@ -81,12 +82,13 @@ TextFormField buildShotDtForm(AddOrEditModel model, Picture picture, context) {
 
 TextFormField buildCommentForm(
   AddOrEditModel model,
-  Picture picture,
+  Picture? picture,
 ) {
   final commentEditController = TextEditingController();
+
   if (picture != null) {
     model.comment = picture.comment;
-    commentEditController.text = picture.comment;
+    commentEditController.text = model.comment;
   }
 
   return TextFormField(
@@ -97,7 +99,7 @@ TextFormField buildCommentForm(
     ],
     textInputAction: TextInputAction.done,
     validator: (val) {
-      if (val.isEmpty) {
+      if (val!.isEmpty) {
         return '写真のコメントを入力してください';
       }
       return null;

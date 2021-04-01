@@ -6,9 +6,8 @@ import '../../constants.dart';
 
 class SideMenuList extends StatelessWidget {
   const SideMenuList({
-    Key key,
-    @required this.signInModel,
-  }) : super(key: key);
+    required this.signInModel,
+  });
 
   final SignInModel signInModel;
 

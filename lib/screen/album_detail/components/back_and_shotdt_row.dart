@@ -7,10 +7,9 @@ import '../../../constants.dart';
 
 class BackAndShotDtRow extends StatelessWidget {
   const BackAndShotDtRow({
-    Key key,
-    @required this.favoriteModel,
-    @required this.picture,
-  }) : super(key: key);
+    required this.favoriteModel,
+    required this.picture,
+  });
 
   final AlbumDetailModel favoriteModel;
   final Picture picture;

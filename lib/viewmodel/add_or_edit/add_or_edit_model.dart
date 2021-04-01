@@ -18,7 +18,7 @@ class AddOrEditModel extends ChangeNotifier {
   String shotDate = '';
   String comment = '';
   String imageUrl = '';
-  File imageFile;
+  File imageFile = File('');
   bool isUploading = false;
 
   startLoading() {
@@ -40,7 +40,7 @@ class AddOrEditModel extends ChangeNotifier {
       firstDate: DateTime(DateTime.now().year - 10),
       lastDate: DateTime(DateTime.now().year + 10),
       locale: const Locale('ja'),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData(
             // ヘッダーの色
@@ -62,7 +62,7 @@ class AddOrEditModel extends ChangeNotifier {
               textTheme: ButtonTextTheme.normal,
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -133,7 +133,7 @@ class AddOrEditModel extends ChangeNotifier {
   // 写真をアップロード
   Future<String> _uploadPictureImage() async {
     // 写真の変更があった場合
-    if (imageFile != null) {
+    if (imageFile.path.isNotEmpty) {
       final storage = FirebaseStorage.instance;
 
       TaskSnapshot snapshot = await storage
@@ -154,6 +154,6 @@ class AddOrEditModel extends ChangeNotifier {
     shotDate = '';
     comment = '';
     imageUrl = '';
-    imageFile = null;
+    imageFile = File('');
   }
 }

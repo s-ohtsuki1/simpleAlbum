@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import 'components/body.dart';
 
 class AddEditScreen extends StatelessWidget {
-  AddEditScreen({Key key, this.picture}) : super(key: key);
-  final Picture picture;
+  AddEditScreen({this.picture});
+  final Picture? picture;
   // final _formKey = GlobalKey<FormState>();
 
   @override
@@ -17,7 +17,7 @@ class AddEditScreen extends StatelessWidget {
     final bool isUpdate = picture != null;
 
     if (isUpdate) {
-      addOrEditModel.imageUrl = picture.imageUrl;
+      addOrEditModel.imageUrl = picture!.imageUrl;
     }
 
     return WillPopScope(

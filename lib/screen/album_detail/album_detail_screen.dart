@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AlbumDetailScreen extends StatelessWidget {
-  final Picture picture;
-
   const AlbumDetailScreen({
-    Key key,
-    this.picture,
-  }) : super(key: key);
+    required this.picture,
+  });
+
+  final Picture picture;
   @override
   Widget build(BuildContext context) {
     return Consumer<AlbumDetailModel>(builder: (context, model, child) {
