@@ -6,9 +6,9 @@ class ForgotPasswordModel extends ChangeNotifier {
   String email = '';
 
   // 再設定メール送信　エラーコード
-  final String INVALID_EMAIL = 'auth/invalid-email';
-  final String USER_NOT_FOUND = 'auth/user-not-found';
-  final String SUCCESS = 'success';
+  final String invalidEmail = 'invalid-email';
+  final String userNotFound = 'user-not-found';
+  final String success = 'success';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -17,7 +17,7 @@ class ForgotPasswordModel extends ChangeNotifier {
     _auth.setLanguageCode('ja');
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      return 'success';
+      return success;
     } catch (e) {
       e as FirebaseAuthException;
       return e.code;
