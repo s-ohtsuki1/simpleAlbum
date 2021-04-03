@@ -2,6 +2,7 @@ import 'package:favorite/components/default_button.dart';
 import 'package:favorite/components/form_error.dart';
 import 'package:favorite/components/no_account_text.dart';
 import 'package:favorite/constants.dart';
+import 'package:favorite/screen/sended_mail/sended_mail_screnn.dart';
 import 'package:favorite/viewmodel/forgot_password/forgot_password_model.dart';
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +19,16 @@ class Body extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
             children: [
+              SizedBox(height: kDefaultPadding * 2),
+              Text(
+                "登録したメールアドレス宛に、\nパスワード再設定メールを送信します。",
+                textAlign: TextAlign.center,
+              ),
               Image.asset(
                 "assets/images/forgot_pass_mail.png",
                 height: SizeConfig.screenHeight * 0.3,
                 width: SizeConfig.screenWidth * 0.4,
               ),
-              // SizedBox(height: SizeConfig.screenHeight * 0.001),
-              Text(
-                "登録したメールアドレス宛に、\nパスワード再設定メールを送信します。",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.01),
               ForgotPassForm(),
             ],
           ),
@@ -120,16 +120,20 @@ class ForgotPassForm extends StatelessWidget {
                     model.email = mailContlloer.text;
 
                     String res = await model.sendPasswordResetEmail();
-                    if (res == model.INVALID_EMAIL) {
-                    } else if (res == model.USER_NOT_FOUND) {
-                    } else if (res == model.SUCCESS) {}
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => BookListPage()),
-                    // );
+                    if (res == model.invalidEmail) {
+                      print(res);
+                    } else if (res == model.userNotFound) {
+                      print(res);
+                    } else if (res == model.success) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SendedMailScreen(),
+                        ),
+                      );
+                    }
                   } catch (e) {
                     // TODO err
-                    // _showDialog(context, e.toString());
                   }
                 }
               } else {}
