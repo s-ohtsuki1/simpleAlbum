@@ -38,19 +38,19 @@ class Body extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SocalCard(
-                        icon: 'assets/icons/google-icon.svg',
+                        icon: 'assets/icons/google_icon.png',
                         press: () {
                           signInModel.googleLogin();
                         },
                       ),
-                      SocalCard(
-                        icon: "assets/icons/facebook-2.svg",
-                        press: () {},
-                      ),
-                      SocalCard(
-                        icon: 'assets/icons/twitter.svg',
-                        press: () {},
-                      ),
+                      // SocalCard(
+                      //   icon: "assets/icons/facebook-2.svg",
+                      //   press: () {},
+                      // ),
+                      // SocalCard(
+                      //   icon: 'assets/icons/twitter.svg',
+                      //   press: () {},
+                      // ),
                     ],
                   ),
                   SizedBox(height: getProportionateScreenHeight(30)),
