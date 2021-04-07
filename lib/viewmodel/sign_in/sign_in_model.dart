@@ -23,15 +23,10 @@ class SignInModel extends ChangeNotifier {
     ],
   );
 
-  // バリデーション
-  // void checkVal() {
-  //   if (mail.isEmpty) {
-  //     throw ('メールアドレスを入力してください。');
-  //   }
-  //   if (password.isEmpty) {
-  //     throw ('パスワードを入力してください。');
-  //   }
-  // }
+  changeIsRemember() {
+    isRemember = isRemember ? false : true;
+    notifyListeners();
+  }
 
   // ログイン
   Future login() async {

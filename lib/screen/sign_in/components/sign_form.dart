@@ -1,5 +1,4 @@
 import 'package:favorite/components/default_button.dart';
-import 'package:favorite/components/form_error.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/screen/forgot_password/forgot_password_screen.dart';
 import 'package:favorite/screen/login_success/login_success_screen.dart';
@@ -8,26 +7,19 @@ import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignForm extends StatefulWidget {
-  @override
-  _SignFormState createState() => _SignFormState();
-}
-
-class _SignFormState extends State<SignForm> {
+class SignForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SignInModel>(context, listen: false);
-    bool isRmember = Provider.of<SignInModel>(context, listen: true).isRemember;
+    final model = Provider.of<SignInModel>(context, listen: true);
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
         child: Column(
           children: [
-            buildEmailFormField(),
+            buildEmailFormField(model),
             SizedBox(height: getProportionateScreenHeight(20)),
-            buildPasswordFormField(),
+            buildPasswordFormField(model),
             SizedBox(
               height: getProportionateScreenHeight(10),
             ),
@@ -44,44 +36,44 @@ class _SignFormState extends State<SignForm> {
               ),
             ),
             SizedBox(height: getProportionateScreenHeight(20)),
-            FormError(errors: errors),
+            // FormError(errors: model.errors),
             SizedBox(height: getProportionateScreenHeight(5)),
             DefaultButton(
               text: "ログイン",
               press: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  if (errors.isEmpty) {
-                    try {
-                      await model.login();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginSuccessScreen()),
-                      );
-                    } catch (e) {
-                      // TODO err
-                      // _showDialog(context, e.toString());
-                    }
+                  try {
+                    await model.login();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginSuccessScreen()),
+                    );
+                  } catch (e) {
+                    // TODO err
+                    // _showDialog(context, e.toString());
                   }
                 } else {}
               },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: isRmember,
-                  activeColor: kPrimaryColor,
-                  onChanged: (isCheck) {
-                    setState(() {
-                      Provider.of<SignInModel>(context, listen: false)
-                          .isRemember = isCheck!;
-                    });
-                  },
-                ),
-                Text("次回から自動でログインします"),
-              ],
+            InkWell(
+              onTap: () {
+                model.changeIsRemember();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: model.isRemember,
+                    activeColor: kPrimaryColor,
+                    onChanged: (isCheck) {
+                      model.changeIsRemember();
+                    },
+                  ),
+                  Text("次回から自動でログインします"),
+                ],
+              ),
             ),
           ],
         ),
@@ -89,39 +81,22 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildEmailFormField() {
-    final mailContlloer =
-        Provider.of<SignInModel>(context, listen: false).mailEditController;
+  TextFormField buildEmailFormField(SignInModel model) {
+    final mailContlloer = model.mailEditController;
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       controller: mailContlloer,
       onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-        }
-        Provider.of<SignInModel>(context, listen: false).mail = value;
-        return null;
+        model.mail = value;
       },
-      validator: (value) {
-        if (value!.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-        } else if (value.isNotEmpty &&
-            !emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
+      validator: (mail) {
+        if (mail!.isEmpty) {
+          // メールアドレスは必須
+          return kEmailNullError;
+        } else if (mail.isNotEmpty && !emailValidatorRegExp.hasMatch(mail)) {
+          // メールアドレスの形式が違う
+          return kInvalidEmailError;
         }
-        return null;
       },
       decoration: InputDecoration(
         filled: true,
@@ -143,36 +118,22 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildPasswordFormField() {
-    final passwordContlloer =
-        Provider.of<SignInModel>(context, listen: false).passwordEditController;
+  TextFormField buildPasswordFormField(SignInModel model) {
+    final passwordContlloer = model.passwordEditController;
 
     return TextFormField(
       obscureText: true,
       controller: passwordContlloer,
       onChanged: (password) {
-        if (password.isNotEmpty && errors.contains(kPassNullError)) {
-          setState(() {
-            errors.remove(kPassNullError);
-          });
-        } else if (password.length >= 8 && errors.contains(kShortPassError)) {
-          setState(() {
-            errors.remove(kShortPassError);
-          });
-        }
-        Provider.of<SignInModel>(context, listen: false).password = password;
+        model.password = password;
       },
       validator: (value) {
-        if (value!.isEmpty && !errors.contains(kPassNullError)) {
-          setState(() {
-            errors.add(kPassNullError);
-          });
-        } else if (value.isNotEmpty &&
-            value.length < 8 &&
-            !errors.contains(kShortPassError)) {
-          // setState(() {
-          //   errors.add(kShortPassError);
-          // });
+        if (value!.isEmpty) {
+          // パスワードは必須
+          return kPassNullError;
+        } else if (value.isNotEmpty && value.length < 8) {
+          // パスワードは8文字以上 TODO:外す
+          // return kShortPassError;
         }
         return null;
       },
