@@ -47,25 +47,27 @@ class _BodyState extends State<Body> {
                 ),
               ),
               Expanded(
-                  flex: 3,
-                  child: PageView.builder(
-                    onPageChanged: (value) {
-                      setState(
-                        () {
-                          currentPage = value;
-                        },
-                      );
-                    },
-                    itemCount: splashData.length,
-                    itemBuilder: (context, index) => SplashContent(
-                      image: splashData[index]["image"]!,
-                      text: splashData[index]["text"]!,
-                    ),
-                  )),
+                flex: 3,
+                child: PageView.builder(
+                  onPageChanged: (value) {
+                    setState(
+                      () {
+                        currentPage = value;
+                      },
+                    );
+                  },
+                  itemCount: splashData.length,
+                  itemBuilder: (context, index) => SplashContent(
+                    image: splashData[index]["image"]!,
+                    text: splashData[index]["text"]!,
+                  ),
+                ),
+              ),
               Expanded(
                 flex: 2,
                 child: Column(
                   children: [
+                    // Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(

@@ -108,7 +108,7 @@ class ForgotPassForm extends StatelessWidget {
           SizedBox(
             height: getProportionateScreenHeight(30),
           ),
-          FormError(errors: errors),
+          // FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "送信",

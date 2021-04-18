@@ -19,6 +19,7 @@ class Body extends StatelessWidget {
     return Material(
       color: kPrimaryColor,
       child: SafeArea(
+        bottom: false,
         child: Container(
           child: Column(
             children: [
