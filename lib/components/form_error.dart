@@ -1,31 +1,33 @@
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
-class FormError extends StatelessWidget {
-  const FormError({required this.errors});
+import '../firebase_auth_error.dart';
 
-  final List<String> errors;
+class FormError extends StatelessWidget {
+  const FormError({this.errorCode});
+
+  final String? errorCode;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-          errors.length, (index) => formErrorText(error: errors[index])),
-    );
-  }
-
-  Row formErrorText({required String error}) {
-    return Row(
-      children: [
-        Icon(
-          Icons.error_outline,
-          color: Colors.pink,
-        ),
-        SizedBox(
-          width: getProportionateScreenWidth(10),
-        ),
-        Text(error),
-      ],
-    );
+    return errorCode!.isNotEmpty
+        ? Column(
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.pink,
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(5),
+                  ),
+                  Text(FirebaseAuthError.convErrorMessage(errorCode)),
+                ],
+              ),
+              SizedBox(height: getProportionateScreenHeight(30)),
+            ],
+          )
+        : SizedBox();
   }
 }

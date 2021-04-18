@@ -1,6 +1,7 @@
 import 'package:favorite/components/socal_card.dart';
 import 'package:favorite/size_config.dart';
 import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
+import 'package:favorite/viewmodel/sign_up/sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,9 @@ import 'sign_up_form.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SignUpModel model = Provider.of<SignUpModel>(context, listen: true);
     SignInModel signInModel = Provider.of<SignInModel>(context, listen: false);
+
     return SingleChildScrollView(
       child: SafeArea(
         child: SizedBox(
@@ -22,7 +25,7 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
-                  "メールアドレスとパスワードを登録してください。",
+                  model.isConfirm ? "こちらの内容で登録します。" : "メールアドレスとパスワードを登録してください。",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

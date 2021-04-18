@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class SignUpModel extends ChangeNotifier {
-  // final mailEditController = TextEditingController();
-  // final passwordEditController = TextEditingController();
-
   String mail = '';
   String password = '';
   String confirmPassword = '';
+  bool isConfirm = false;
+
+  String errorCode = '';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -22,7 +22,6 @@ class SignUpModel extends ChangeNotifier {
       // メールアドレスの形式が違う
       return kInvalidEmailError;
     }
-    notifyListeners();
   }
 
   validPasswordForm(String? value) {
@@ -30,11 +29,17 @@ class SignUpModel extends ChangeNotifier {
       // パスワードは必須
       return kPassNullError;
     } else if (value.isNotEmpty && value.length < 8) {
-      // パスワードは8文字以上 TODO:外す
-      return kShortPassError;
+      // パスワードは8文字以上
+      // return kShortPassError;
     } else if (password != confirmPassword) {
       return kMatchPassError;
     }
+    notifyListeners();
+  }
+
+  // 確認画面へ
+  changeConfirmScreen() {
+    isConfirm = isConfirm ? false : true;
     notifyListeners();
   }
 
@@ -54,5 +59,13 @@ class SignUpModel extends ChangeNotifier {
         'created_at': Timestamp.now(),
       },
     );
+  }
+
+  // サインアップエラー
+  signUpErrorMessage(Object e) {
+    e as FirebaseAuthException;
+    errorCode = e.code;
+    print(e.code);
+    notifyListeners();
   }
 }

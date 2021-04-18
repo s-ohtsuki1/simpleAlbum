@@ -1,4 +1,5 @@
 import 'package:favorite/components/default_button.dart';
+import 'package:favorite/components/form_error.dart';
 import 'package:favorite/screen/login_success/login_success_screen.dart';
 import 'package:favorite/viewmodel/sign_up/sign_up_model.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +18,25 @@ class SignUpForm extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            FormError(errorCode: model.errorCode),
             buildEmailFormField(model),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: getProportionateScreenHeight(30)),
             buildPasswordFormField(model),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: getProportionateScreenHeight(30)),
             buildConfirmPasswordFormField(model),
-            SizedBox(height: getProportionateScreenHeight(40)),
+            SizedBox(height: getProportionateScreenHeight(50)),
             DefaultButton(
-              text: "会員登録",
+              text: model.isConfirm ? "登録する" : "確認画面へ",
               press: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+
+                  // 確認画面へ
+                  if (!model.isConfirm) {
+                    model.changeConfirmScreen();
+                    return;
+                  }
+
                   try {
                     await model.signUp();
                     Navigator.push(
@@ -36,10 +45,9 @@ class SignUpForm extends StatelessWidget {
                           builder: (context) => LoginSuccessScreen()),
                     );
                   } catch (e) {
-                    // TODO err
-                    // _showDialog(context, e.toString());
+                    model.signUpErrorMessage(e);
                   }
-                } else {}
+                }
               },
             ),
           ],
@@ -59,9 +67,10 @@ class SignUpForm extends StatelessWidget {
       validator: (value) {
         return model.validEmailForm(value);
       },
+      readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: model.isConfirm ? Colors.lightBlue[100] : Colors.white,
         labelText: "email",
         labelStyle: TextStyle(color: kSecondaryColor, fontSize: 20),
         hintText: "メールアドレス",
@@ -91,9 +100,10 @@ class SignUpForm extends StatelessWidget {
       validator: (value) {
         return model.validPasswordForm(value);
       },
+      readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: model.isConfirm ? Colors.lightBlue[100] : Colors.white,
         labelText: "password",
         labelStyle: TextStyle(color: kSecondaryColor, fontSize: 20),
         hintText: "パスワード",
@@ -124,9 +134,10 @@ class SignUpForm extends StatelessWidget {
       validator: (value) {
         return model.validPasswordForm(value);
       },
+      readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: model.isConfirm ? Colors.lightBlue[100] : Colors.white,
         labelText: "confirm password",
         labelStyle: TextStyle(color: kSecondaryColor, fontSize: 20),
         hintText: "パスワード(確認)",
