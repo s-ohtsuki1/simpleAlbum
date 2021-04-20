@@ -65,6 +65,7 @@ class SignUpModel extends ChangeNotifier {
   signUpErrorMessage(Object e) {
     e as FirebaseAuthException;
     errorCode = e.code;
+    isConfirm = false;
     print(e.code);
     notifyListeners();
   }
