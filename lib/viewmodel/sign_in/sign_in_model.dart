@@ -1,3 +1,4 @@
+import 'package:favorite/screen/login_success/login_success_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,12 +7,11 @@ import 'dart:convert' show json;
 import "package:http/http.dart" as http;
 
 class SignInModel extends ChangeNotifier {
-  final mailEditController = TextEditingController();
-  final passwordEditController = TextEditingController();
-
   String mail = '';
   String password = '';
   bool isRemember = false;
+
+  String errorCode = '';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -29,12 +29,22 @@ class SignInModel extends ChangeNotifier {
   }
 
   // ログイン
-  Future login() async {
-    // ログイン
-    await _auth.signInWithEmailAndPassword(
-      email: mail,
-      password: password,
-    );
+  Future login(context) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: mail,
+        password: password,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginSuccessScreen()),
+      );
+    } catch (e) {
+      e as FirebaseAuthException;
+      errorCode = e.code;
+      print(e.code);
+      notifyListeners();
+    }
   }
 
   // Google login

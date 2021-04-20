@@ -1,26 +1,28 @@
+import 'package:favorite/screen/sended_mail/sended_mail_screnn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordModel extends ChangeNotifier {
-  final mailEditController = TextEditingController();
-  String email = '';
-
-  // 再設定メール送信　エラーコード
-  final String invalidEmail = 'invalid-email';
-  final String userNotFound = 'user-not-found';
-  final String success = 'success';
+  String mail = '';
+  String errorCode = '';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // パスワードリセットメール送信
-  Future sendPasswordResetEmail() async {
+  Future sendPasswordResetEmail(context) async {
     _auth.setLanguageCode('ja');
     try {
-      await _auth.sendPasswordResetEmail(email: email);
-      return success;
+      await _auth.sendPasswordResetEmail(email: mail);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SendedMailScreen()),
+      );
     } catch (e) {
       e as FirebaseAuthException;
-      return e.code;
+      errorCode = e.code;
+      print(e.code);
+      notifyListeners();
     }
   }
 }

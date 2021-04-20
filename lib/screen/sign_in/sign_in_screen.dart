@@ -20,7 +20,6 @@ class SignInScreen extends StatelessWidget {
           appBar: AppBar(
             centerTitle: true,
             title: appBarTextStyle("ログイン"),
-            shape: appBarShape(),
             automaticallyImplyLeading: false,
           ),
           resizeToAvoidBottomInset: true,

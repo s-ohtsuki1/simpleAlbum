@@ -29,7 +29,8 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.06),
                 SignForm(),
-                SizedBox(height: getProportionateScreenHeight(10)),
+                SizedBox(height: SizeConfig.screenHeight * 0.06),
+                Text("他のアカウントでログインする"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

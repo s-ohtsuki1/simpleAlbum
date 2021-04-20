@@ -1,13 +1,16 @@
 import 'package:favorite/components/default_button.dart';
+import 'package:favorite/components/form_error.dart';
 import 'package:favorite/constants.dart';
 import 'package:favorite/screen/forgot_password/forgot_password_screen.dart';
 import 'package:favorite/screen/login_success/login_success_screen.dart';
 import 'package:favorite/size_config.dart';
+import 'package:favorite/util/validator_util.dart';
 import 'package:favorite/viewmodel/sign_in/sign_in_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignForm extends StatelessWidget {
+  final validator = ValidatorUtil();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -17,11 +20,12 @@ class SignForm extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            FormError(errorCode: model.errorCode),
             buildEmailFormField(model),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: getProportionateScreenHeight(30)),
             buildPasswordFormField(model),
             SizedBox(
-              height: getProportionateScreenHeight(10),
+              height: getProportionateScreenHeight(20),
             ),
             GestureDetector(
               onTap: () => Navigator.push(
@@ -36,44 +40,15 @@ class SignForm extends StatelessWidget {
               ),
             ),
             SizedBox(height: getProportionateScreenHeight(20)),
-            // FormError(errors: model.errors),
             SizedBox(height: getProportionateScreenHeight(5)),
             DefaultButton(
               text: "ログイン",
               press: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  try {
-                    await model.login();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginSuccessScreen()),
-                    );
-                  } catch (e) {
-                    // TODO err
-                    // _showDialog(context, e.toString());
-                  }
-                } else {}
+                  await model.login(context);
+                }
               },
-            ),
-            InkWell(
-              onTap: () {
-                model.changeIsRemember();
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                    value: model.isRemember,
-                    activeColor: kPrimaryColor,
-                    onChanged: (isCheck) {
-                      model.changeIsRemember();
-                    },
-                  ),
-                  Text("次回から自動でログインします"),
-                ],
-              ),
             ),
           ],
         ),
@@ -82,21 +57,15 @@ class SignForm extends StatelessWidget {
   }
 
   TextFormField buildEmailFormField(SignInModel model) {
-    final mailContlloer = model.mailEditController;
+    final mailContlloer = TextEditingController(text: model.mail);
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       controller: mailContlloer,
       onChanged: (value) {
         model.mail = value;
       },
-      validator: (mail) {
-        if (mail!.isEmpty) {
-          // メールアドレスは必須
-          return kEmailNullError;
-        } else if (mail.isNotEmpty && !emailValidatorRegExp.hasMatch(mail)) {
-          // メールアドレスの形式が違う
-          return kInvalidEmailError;
-        }
+      validator: (value) {
+        return validator.validEmailForm(value);
       },
       decoration: InputDecoration(
         filled: true,
@@ -119,7 +88,7 @@ class SignForm extends StatelessWidget {
   }
 
   TextFormField buildPasswordFormField(SignInModel model) {
-    final passwordContlloer = model.passwordEditController;
+    final passwordContlloer = TextEditingController(text: model.password);
 
     return TextFormField(
       obscureText: true,
@@ -128,14 +97,7 @@ class SignForm extends StatelessWidget {
         model.password = password;
       },
       validator: (value) {
-        if (value!.isEmpty) {
-          // パスワードは必須
-          return kPassNullError;
-        } else if (value.isNotEmpty && value.length < 8) {
-          // パスワードは8文字以上 TODO:外す
-          // return kShortPassError;
-        }
-        return null;
+        return validator.validPasswordForm(value, null);
       },
       decoration: InputDecoration(
         filled: true,

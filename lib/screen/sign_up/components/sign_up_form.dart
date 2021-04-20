@@ -1,6 +1,7 @@
 import 'package:favorite/components/default_button.dart';
 import 'package:favorite/components/form_error.dart';
 import 'package:favorite/screen/login_success/login_success_screen.dart';
+import 'package:favorite/util/validator_util.dart';
 import 'package:favorite/viewmodel/sign_up/sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class SignUpForm extends StatelessWidget {
+  final validator = ValidatorUtil();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -37,16 +39,7 @@ class SignUpForm extends StatelessWidget {
                     return;
                   }
 
-                  try {
-                    await model.signUp();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginSuccessScreen()),
-                    );
-                  } catch (e) {
-                    model.signUpErrorMessage(e);
-                  }
+                  await model.signUp(context);
                 }
               },
             ),
@@ -65,7 +58,7 @@ class SignUpForm extends StatelessWidget {
         model.mail = value;
       },
       validator: (value) {
-        return model.validEmailForm(value);
+        return validator.validEmailForm(value);
       },
       readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
@@ -98,7 +91,7 @@ class SignUpForm extends StatelessWidget {
         model.password = password;
       },
       validator: (value) {
-        return model.validPasswordForm(value);
+        return validator.validPasswordForm(value, model.confirmPassword);
       },
       readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
@@ -132,7 +125,7 @@ class SignUpForm extends StatelessWidget {
         model.confirmPassword = password;
       },
       validator: (value) {
-        return model.validPasswordForm(value);
+        return validator.validPasswordForm(value, model.password);
       },
       readOnly: model.isConfirm ? true : false,
       decoration: InputDecoration(
