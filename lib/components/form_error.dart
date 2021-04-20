@@ -1,7 +1,7 @@
 import 'package:favorite/size_config.dart';
 import 'package:flutter/material.dart';
 
-import '../firebase_auth_error.dart';
+import '../firebase_auth_error_code.dart';
 
 class FormError extends StatelessWidget {
   const FormError({this.errorCode});
