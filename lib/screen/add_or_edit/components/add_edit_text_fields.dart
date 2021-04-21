@@ -45,7 +45,7 @@ TextFormField buildShotDtForm(AddOrEditModel model, Picture? picture, context) {
   final shotDtEditController = TextEditingController();
 
   if (picture != null) {
-    model.shotDate = dateFormat(picture.shotDate.toDate());
+    model.shotDate = DateUtil.dateFormat(picture.shotDate.toDate());
     shotDtEditController.text = model.shotDate;
   }
 

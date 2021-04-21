@@ -43,7 +43,7 @@ class BackAndShotDtRow extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Text(
-            "撮影日: " + dateFormat(picture.shotDate.toDate()),
+            "撮影日: " + DateUtil.dateFormat(picture.shotDate.toDate()),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

@@ -110,7 +110,8 @@ class AlbumCard extends StatelessWidget {
                                       width: 18,
                                     ),
                                     Text(
-                                      dateFormat(picture.shotDate.toDate()),
+                                      DateUtil.dateFormat(
+                                          picture.shotDate.toDate()),
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

@@ -68,7 +68,7 @@ class AddOrEditModel extends ChangeNotifier {
     );
 
     if (date != null) {
-      shotDate = dateFormat(date);
+      shotDate = DateUtil.dateFormat(date);
       return shotDate;
     } else if (preSelectDt.isNotEmpty) {
       return preSelectDt;
