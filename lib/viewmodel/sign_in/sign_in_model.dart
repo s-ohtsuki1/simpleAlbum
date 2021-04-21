@@ -9,7 +9,6 @@ import "package:http/http.dart" as http;
 class SignInModel extends ChangeNotifier {
   String mail = '';
   String password = '';
-  bool isRemember = false;
 
   String errorCode = '';
 
@@ -22,11 +21,6 @@ class SignInModel extends ChangeNotifier {
       // 'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-
-  changeIsRemember() {
-    isRemember = isRemember ? false : true;
-    notifyListeners();
-  }
 
   // ログイン
   Future login(context) async {
@@ -102,6 +96,7 @@ class SignInModel extends ChangeNotifier {
 
   // ログアウト
   void logOut() async {
+    errorCode = '';
     await _auth.signOut();
   }
 }

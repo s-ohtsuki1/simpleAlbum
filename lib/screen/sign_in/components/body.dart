@@ -10,7 +10,7 @@ import 'sign_form.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SignInModel signInModel = Provider.of<SignInModel>(context, listen: false);
+    SignInModel signInModel = Provider.of<SignInModel>(context, listen: true);
     return SingleChildScrollView(
       child: SafeArea(
         child: SizedBox(
